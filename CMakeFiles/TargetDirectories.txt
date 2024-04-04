@@ -1,0 +1,3 @@
+/home/sliderer/projects/HttpSli/CMakeFiles/http_sli.dir
+/home/sliderer/projects/HttpSli/CMakeFiles/edit_cache.dir
+/home/sliderer/projects/HttpSli/CMakeFiles/rebuild_cache.dir
