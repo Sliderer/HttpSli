@@ -6,7 +6,7 @@ namespace httpsli::tcp_server{
         public:
             TCPServer(std::string&& address, int port);
 
-            int StartServer(){
+            int StartServer() {
                 
                 return 0;
             }

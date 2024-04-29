@@ -3,8 +3,12 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceRoot}/**"
+                "${workspaceRoot}/**", 
             ], 
+            "browse": {
+                "path": ["${workspaceFolder}/src/**"],
+                "limitSymbolsToIncludedHeaders": true,
+              },
             "defines": [],
             "compilerPath": "/usr/bin/clang",
             "cppStandard": "c++17",
