@@ -1,9 +1,5 @@
-#include <iostream>
-#include <server/sockets/SocketWrapper.hpp>
-#include <server/HttpServer.hpp>
+#include <basic_servers/TCPServer.hpp>
 
 int main(){
-    server_logic::Server server;
-    server.StartServer();
-    std::cout << "Hello world";
+    httpsli::tcp_server::TCPServer server(std::move("127.0.0.1"), 80);
 }

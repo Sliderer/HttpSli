@@ -1,1 +1,0 @@
-/usr/bin/c++  -I ./src -rdynamic CMakeFiles/http_sli.dir/src/main.cpp.o CMakeFiles/http_sli.dir/src/server/HttpServer.cpp.o CMakeFiles/http_sli.dir/src/server/sockets/SocketWrapper.cpp.o -o http_sli 
