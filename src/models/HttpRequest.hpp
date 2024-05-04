@@ -6,6 +6,7 @@
 #include <unordered_map>
 
 namespace httpsli::http {
+
 using Headers = std::unordered_map<std::string, std::string>;
 
 class HttpRequest {
@@ -22,7 +23,7 @@ public:
 
   void SetBody(std::string& body);
   
-  void SetRequestType();
+  void SetRequestType(RequestType request_type);
 
 private:
   RequestType request_type_;
