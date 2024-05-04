@@ -1,21 +1,23 @@
 #pragma once
 
 #include <enums/RequestType.hpp>
+#include <models/responses/BasicResponse.hpp>
 #include <optional>
 #include <string>
 #include <unordered_map>
 
-namespace httpsli::http {
+namespace httpsli::responses::http {
+using namespace httpsli::http;
 
 using Headers = std::unordered_map<std::string, std::string>;
 
-class HttpRequest {
+class HttpResponse : public BasicResponse {
 public:
-  HttpRequest(){}
+  HttpResponse(){}
 
-  HttpRequest(RequestType request_type, Headers headers,
+  HttpResponse(int status_code, RequestType request_type, Headers headers,
               std::optional<std::string> body = std::nullopt)
-      : request_type_(request_type), headers_(headers), body_(body) {}
+      : status_code_(status_code), request_type_(request_type), headers_(headers), body_(body) {}
 
   void AddHeader(std::string& header_name, std::string& header_value);
 
@@ -25,7 +27,10 @@ public:
   
   void SetRequestType(RequestType request_type);
 
+  void SetStatusCode(int status_code);
+
 private:
+  int status_code_;
   RequestType request_type_;
   Headers headers_;
   std::optional<std::string> body_;

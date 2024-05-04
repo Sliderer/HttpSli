@@ -1,6 +1,6 @@
 #include "HttpRequest.hpp"
 
-namespace httpsli::http {
+namespace httpsli::requests::http {
 
     void HttpRequest::AddHeader(std::string& header, std::string& header_value){
         headers_[header] = header_value;
