@@ -6,13 +6,11 @@ namespace httpsli::tcp_server{
         public:
             TCPServer(std::string&& address, int port);
 
-            int StartServer() {
-                
-                return 0;
-            }
+            void StartServer();
+
+            void Join();
 
             ~TCPServer();
-
         private:
         class Impl;
             std::unique_ptr<Impl> impl_;
