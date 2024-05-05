@@ -1,4 +1,5 @@
 #include "TCPServer.hpp"
+#include <boost/asio/ip/tcp.hpp>
 #include <functional>
 #include <iostream>
 
@@ -8,13 +9,17 @@ using namespace boost::asio;
 class TCPServer::Impl {
 
 public:
-  Impl(std::string &&address, int port, ClientSession client_session) : address_(address), port_(port), client_session_(client_session) {}
+  Impl(std::string& address, int port) : address_(address), port_(port) {}
 
   Impl(Impl& impl){}
 
   void StartServer() {
     ip::tcp::acceptor acceptor = InitializeServer();
     StartWaitingForAccept(acceptor);
+  }
+
+  void SetClientSession(std::function<void (ip::tcp::socket&)> client_session){
+    client_session_ = client_session;
   }
 
   ~Impl() { }
@@ -58,13 +63,17 @@ private:
   ClientSession client_session_;
 };
 
-TCPServer::TCPServer(std::string &&address, int port, ClientSession client_session) {
-  impl_ = std::make_unique<Impl>(std::move(address), port, client_session);
+TCPServer::TCPServer(std::string& address, int port) {
+  impl_ = std::make_unique<Impl>(address, port);
 }
 
 void TCPServer::StartServer() {
   std::cout << "Starting server\n";
   impl_->StartServer();
+}
+
+void TCPServer::SetClientSession(std::function<void (ip::tcp::socket&)> client_session){
+  impl_->SetClientSession(client_session);
 }
 
 TCPServer::~TCPServer(){}

@@ -29,6 +29,8 @@ public:
 
   void SetStatusCode(int status_code);
 
+  std::string Serialize() override;
+
 private:
   int status_code_;
   RequestType request_type_;

@@ -28,6 +28,8 @@ public:
   
   void SetRequestType(RequestType request_type);
 
+  std::string Serialize() override;
+
 private:
   RequestType request_type_;
   Headers headers_;

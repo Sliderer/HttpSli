@@ -21,4 +21,8 @@ namespace httpsli::responses::http {
     void HttpResponse::SetStatusCode(int status_code){
         status_code_ = status_code;
     }
+
+    std::string HttpResponse::Serialize() {
+        return "";
+    }
 }

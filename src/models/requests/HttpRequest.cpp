@@ -17,4 +17,8 @@ namespace httpsli::requests::http {
     void HttpRequest::SetRequestType(RequestType request_type){
         request_type_ = request_type;
     }
+
+    std::string HttpRequest::Serialize() {
+        return "";
+    }
 }

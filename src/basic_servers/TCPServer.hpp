@@ -1,3 +1,4 @@
+#include <boost/asio/ip/tcp.hpp>
 #include <models/responses/BasicResponse.hpp>
 #include <models/requests/BasicRequest.hpp>
 
@@ -16,9 +17,11 @@ namespace httpsli::tcp_server{
 
     class TCPServer{
         public:
-            TCPServer(std::string&& address, int port, ClientSession client_session);
+            TCPServer(std::string& address, int port);
 
             void StartServer();
+
+            void SetClientSession(std::function<void (boost::asio::ip::tcp::socket&)>);
 
             ~TCPServer();
         private:

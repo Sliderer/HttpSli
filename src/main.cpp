@@ -1,12 +1,10 @@
-#include <basic_servers/TCPServer.hpp>
 #include <iostream>
 #include <models/requests/HttpRequest.hpp>
 #include <models/responses/HttpResponse.hpp>
-
+#include <built_servers/HttpServer.hpp>
 
 int main(){
-    // httpsli::tcp_server::TCPServer server(std::move("127.0.0.1"), 8080);
-    // server.StartServer();
-    // std::cout << "End\n";
+    std::string address = "127.0.0.1";
+    httpsli::http::HttpServer server(address, 8080);
     return 0;
 }

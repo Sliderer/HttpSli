@@ -1,6 +1,9 @@
 #pragma once
 
+#include <boost/asio.hpp>
+
 #include <basic_servers/TCPServer.hpp>
+#include <boost/asio/ip/tcp.hpp>
 #include <models/requests/HttpRequest.hpp>
 #include <models/responses/HttpResponse.hpp>
 
@@ -10,19 +13,17 @@ namespace httpsli::http {
 
     using ClientSession = std::function<responses::http::HttpResponse(requests::http::HttpRequest&)>;
 
-
-    class HttpServer : public TCPServer {
+    class HttpServer : public httpsli::tcp_server::TCPServer {
         public:
-            HttpServer();
+            HttpServer(std::string& address, int port);
 
         private:
-            requests::http::HttpRequest ParseRequest();
+            void ClientSession(boost::asio::ip::tcp::socket& socket);
 
-            responses::http::HttpResponse BuildResponse();
+            requests::http::HttpRequest GetRequest(boost::asio::ip::tcp::socket& socket);
 
+            int SendResponse(responses::http::HttpResponse& response);
 
-        private:
-            ClientSession client_session_;
-
+    
     };
 }
