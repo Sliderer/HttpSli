@@ -17,8 +17,9 @@ public:
   HttpRequest(){}
 
   HttpRequest(RequestType request_type, Headers headers,
+              const std::string& address, 
               std::optional<std::string> body = std::nullopt)
-      : request_type_(request_type), headers_(headers), body_(body) {}
+      : request_type_(request_type), address_(address), headers_(headers), body_(body) {}
 
   void AddHeader(std::string& header_name, std::string& header_value);
 
@@ -28,11 +29,14 @@ public:
   
   void SetRequestType(RequestType request_type);
 
+  std::string GetAddress();
+
   std::string Serialize() override;
 
 private:
   RequestType request_type_;
   Headers headers_;
+  std::string address_;
   std::optional<std::string> body_;
 };
 } // namespace httpsli::http

@@ -9,17 +9,14 @@ using namespace boost::asio;
 class TCPServer::Impl {
 
 public:
-  Impl(std::string& address, int port) : address_(address), port_(port) {}
+  Impl(std::string& address, int port, std::function<void (boost::asio::ip::tcp::socket&)> client_session) :
+   address_(address), port_(port), client_session_(client_session) {}
 
   Impl(Impl& impl){}
 
   void StartServer() {
     ip::tcp::acceptor acceptor = InitializeServer();
     StartWaitingForAccept(acceptor);
-  }
-
-  void SetClientSession(std::function<void (ip::tcp::socket&)> client_session){
-    client_session_ = client_session;
   }
 
   ~Impl() { }
@@ -59,21 +56,16 @@ private:
   std::string address_;
   ip::tcp::endpoint endpoint_;
   int port_;
-    
   ClientSession client_session_;
 };
 
-TCPServer::TCPServer(std::string& address, int port) {
-  impl_ = std::make_unique<Impl>(address, port);
+TCPServer::TCPServer(std::string& address, int port, std::function<void (boost::asio::ip::tcp::socket&)> client_session) {
+  impl_ = std::make_unique<Impl>(address, port, client_session);
 }
 
 void TCPServer::StartServer() {
   std::cout << "Starting server\n";
   impl_->StartServer();
-}
-
-void TCPServer::SetClientSession(std::function<void (ip::tcp::socket&)> client_session){
-  impl_->SetClientSession(client_session);
 }
 
 TCPServer::~TCPServer(){}

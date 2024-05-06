@@ -18,6 +18,10 @@ namespace httpsli::requests::http {
         request_type_ = request_type;
     }
 
+    std::string HttpRequest::GetAddress(){
+        return address_;
+    }
+
     std::string HttpRequest::Serialize() {
         return "";
     }

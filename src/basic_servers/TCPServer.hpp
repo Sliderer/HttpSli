@@ -17,15 +17,14 @@ namespace httpsli::tcp_server{
 
     class TCPServer{
         public:
-            TCPServer(std::string& address, int port);
+            TCPServer(std::string& address, int port, std::function<void (boost::asio::ip::tcp::socket&)> client_session);
 
             void StartServer();
-
-            void SetClientSession(std::function<void (boost::asio::ip::tcp::socket&)>);
 
             ~TCPServer();
         private:
         class Impl;
             std::unique_ptr<Impl> impl_;
+            std::function<void (boost::asio::ip::tcp::socket&)> client_session;
     };
 }

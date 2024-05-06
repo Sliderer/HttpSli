@@ -1,18 +1,23 @@
 #include "HttpServer.hpp"
 
-namespace httpsli::http {
+#include <optional>
+#include <iostream>
 
-    HttpServer::HttpServer(std::string& address, int port) : 
-        httpsli::tcp_server::TCPServer(address, port) {
-            SetClientSession([&](boost::asio::ip::tcp::socket& socket){
+namespace httpsli::http {
+    HttpServer::HttpServer(std::string& address, int port, httpsli::helpers::http::AddressRouter router) : 
+        httpsli::tcp_server::TCPServer(address, port, [&](boost::asio::ip::tcp::socket& socket){
                 this->ClientSession(socket);
-            });
-    }
+            }), router_(router) {}
 
     void HttpServer::ClientSession(boost::asio::ip::tcp::socket& socket) {
         requests::http::HttpRequest request = GetRequest(socket);
 
-        responses::http::HttpResponse response; // = Mapper Gethandler and launch handler;
+        std::optional<Handler> handler = router_.FindHandler(request);
+        if (!handler.has_value()){
+            std::cout << "No handler found\n";
+            return;
+        }
+        responses::http::HttpResponse response = (*handler)(request);
 
         SendResponse(response);
     }
