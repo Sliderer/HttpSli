@@ -7,4 +7,4 @@ OUTPUT_FOLDER = ./bin
 .PHONY: all
 all:
 	$(COMPILER) $(OPTIONS) $(SOURCE_FILES)
-	./$(BIN_NAME)
+	valgrind ./$(BIN_NAME)

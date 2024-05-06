@@ -24,10 +24,12 @@ public:
              httpsli::helpers::http::AddressRouter router);
 
 private:
-  void ClientSession(boost::asio::ip::tcp::socket &socket);
+  void ClientSession(boost::asio::ip::tcp::socket &socket,
+                     boost::asio::io_service &service, 
+                     std::string& buffer);
 
   void ReadFromSocket(boost::asio::ip::tcp::socket &socket, int read_size,
-                      std::stringstream &data);
+                      boost::asio::io_service &service, std::string& buffer);
 
   void WriteToScoket(boost::asio::ip::tcp::socket &socket, int write_size,
                      httpsli::responses::http::HttpResponse &response);

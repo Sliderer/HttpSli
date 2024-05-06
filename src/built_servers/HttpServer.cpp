@@ -1,6 +1,7 @@
 #include "HttpServer.hpp"
 
 #include <boost/asio/buffer.hpp>
+#include <boost/asio/io_service.hpp>
 #include <iostream>
 #include <optional>
 
@@ -8,38 +9,27 @@ namespace httpsli::http {
 HttpServer::HttpServer(std::string &address, int port,
                        httpsli::helpers::http::AddressRouter router)
     : httpsli::tcp_server::TCPServer(address, port,
-                                     [&](boost::asio::ip::tcp::socket &socket) {
-                                       this->ClientSession(socket);
+                                     [&](boost::asio::ip::tcp::socket &socket,
+                                         boost::asio::io_service &service, std::string& buffer) {
+                                       this->ClientSession(socket, service, buffer);
                                      }),
       router_(router) {}
 
-void HttpServer::ClientSession(boost::asio::ip::tcp::socket &socket) {
-  std::stringstream data_stream;
-  ReadFromSocket(socket, 1024, data_stream);
+void HttpServer::ClientSession(boost::asio::ip::tcp::socket &socket,
+                               boost::asio::io_service &service, std::string& buffer) {
+  ReadFromSocket(socket, 1024, service, buffer);
 }
 
 void HttpServer::ReadFromSocket(boost::asio::ip::tcp::socket &socket,
-                                int read_size, std::stringstream &data) {
-  std::string current_part;
+                                int read_size,
+                                boost::asio::io_service &service, std::string& buffer) {
 
   std::function<void(const boost::system::error_code &, std::size_t)>
       reading_handler = [&](const boost::system::error_code &error,
                             std::size_t bytes_transferred) {
-        if (bytes_transferred != 0 && bytes_transferred == read_size) {
-          socket.async_read_some(boost::asio::buffer(current_part),
-                                 reading_handler);
-        }
-      };
-
-  std::function<void(const boost::system::error_code &, std::size_t)>
-      initial_reading_handler = [&](const boost::system::error_code &error,
-                                    std::size_t bytes_transferred) {
-        if (bytes_transferred != 0 && bytes_transferred == read_size) {
-
-          socket.async_read_some(boost::asio::buffer(current_part),
-                                 reading_handler);
-        }
-
+        std::cout << error << '\n';
+        std::cout << "Readed " << bytes_transferred << '\n';
+        std::cout << "Request " << buffer << '\n';
         httpsli::requests::http::HttpRequest request;
         std::optional<Handler> handler = FindHandler(request);
         if (!handler.has_value()) {
@@ -52,26 +42,23 @@ void HttpServer::ReadFromSocket(boost::asio::ip::tcp::socket &socket,
         WriteToScoket(socket, 1024, response);
       };
 
-  socket.async_read_some(boost::asio::buffer(current_part),
-                         initial_reading_handler);
+  socket.async_read_some(boost::asio::buffer(buffer, read_size), reading_handler);
+
+  service.run();
 }
 
 void HttpServer::WriteToScoket(
     boost::asio::ip::tcp::socket &socket, int write_size,
     httpsli::responses::http::HttpResponse &response) {
+
   std::string serialized_response = response.Serialize();
 
   std::function<void(const boost::system::error_code &, std::size_t)>
       write_handler = [&](const boost::system::error_code &error,
-                          std::size_t bytes_transferred) {
-        if (bytes_transferred != 0 && bytes_transferred == write_size) {
-          serialized_response = serialized_response.substr(1024);
-          socket.async_write_some(boost::asio::buffer(serialized_response),
-                                  write_handler);
-        }
-      };
+                          std::size_t bytes_transferred) { socket.close(); };
 
-  socket.async_write_some(boost::asio::buffer(serialized_response), write_handler);
+  socket.async_write_some(boost::asio::buffer(serialized_response),
+                          write_handler);
 }
 
 std::optional<Handler>

@@ -13,11 +13,11 @@ namespace httpsli::tcp_server{
     using namespace httpsli::responses;
     using namespace httpsli::requests;
 
-    using ClientSession = std::function<void (boost::asio::ip::tcp::socket&)>;
+    using ClientSession = std::function<void (boost::asio::ip::tcp::socket&, boost::asio::io_service&, std::string&)>;
 
     class TCPServer{
         public:
-            TCPServer(std::string& address, int port, std::function<void (boost::asio::ip::tcp::socket&)> client_session);
+            TCPServer(std::string& address, int port, ClientSession client_session);
 
             void StartServer();
 
@@ -25,6 +25,6 @@ namespace httpsli::tcp_server{
         private:
         class Impl;
             std::unique_ptr<Impl> impl_;
-            std::function<void (boost::asio::ip::tcp::socket&)> client_session;
+            ClientSession client_session;
     };
 }
