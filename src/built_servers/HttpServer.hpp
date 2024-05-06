@@ -28,10 +28,10 @@ private:
                      boost::asio::io_service &service, 
                      std::string& buffer);
 
-  void ReadFromSocket(boost::asio::ip::tcp::socket &socket, int read_size,
+  void ReadFromSocket(boost::asio::ip::tcp::socket &socket,
                       boost::asio::io_service &service, std::string& buffer);
 
-  void WriteToScoket(boost::asio::ip::tcp::socket &socket, int write_size,
+  void WriteToScoket(boost::asio::ip::tcp::socket &socket,
                      httpsli::responses::http::HttpResponse &response);
 
   std::optional<Handler>

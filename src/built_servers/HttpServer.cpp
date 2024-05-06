@@ -17,11 +17,10 @@ HttpServer::HttpServer(std::string &address, int port,
 
 void HttpServer::ClientSession(boost::asio::ip::tcp::socket &socket,
                                boost::asio::io_service &service, std::string& buffer) {
-  ReadFromSocket(socket, 1024, service, buffer);
+  ReadFromSocket(socket, service, buffer);
 }
 
 void HttpServer::ReadFromSocket(boost::asio::ip::tcp::socket &socket,
-                                int read_size,
                                 boost::asio::io_service &service, std::string& buffer) {
 
   std::function<void(const boost::system::error_code &, std::size_t)>
@@ -39,16 +38,14 @@ void HttpServer::ReadFromSocket(boost::asio::ip::tcp::socket &socket,
 
         httpsli::responses::http::HttpResponse response = (*handler)(request);
 
-        WriteToScoket(socket, 1024, response);
+        WriteToScoket(socket, response);
       };
 
-  socket.async_read_some(boost::asio::buffer(buffer, read_size), reading_handler);
-
-  service.run();
+  socket.async_read_some(boost::asio::buffer(buffer, buffer.size()), reading_handler);
 }
 
 void HttpServer::WriteToScoket(
-    boost::asio::ip::tcp::socket &socket, int write_size,
+    boost::asio::ip::tcp::socket &socket,
     httpsli::responses::http::HttpResponse &response) {
 
   std::string serialized_response = response.Serialize();
