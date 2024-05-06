@@ -41,6 +41,7 @@ void HttpServer::ReadFromSocket(boost::asio::ip::tcp::socket &socket,
         WriteToScoket(socket, response);
       };
 
+      
   socket.async_read_some(boost::asio::buffer(buffer, buffer.size()), reading_handler);
 }
 

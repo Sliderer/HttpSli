@@ -3,22 +3,24 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <functional>
 #include <iostream>
-#include <thread>
+#include <memory>
 
 namespace httpsli::tcp_server {
 using namespace boost::asio;
 
 class TCPServer::Impl {
-
 public:
   Impl(std::string &address, int port, ClientSession client_session)
       : address_(address), port_(port), client_session_(client_session) {}
 
   Impl(Impl &impl) {}
 
+  void Join() {}
+
   void StartServer() {
     ip::tcp::acceptor acceptor = InitializeServer();
     StartWaitingForAccept(acceptor);
+    service_.run();
   }
 
   ~Impl() {}
@@ -34,18 +36,19 @@ private:
 
   void StartWaitingForAccept(ip::tcp::acceptor &acceptor) {
     std::cout << "Waiting for clients\n";
-    ip::tcp::socket socket(service_);
     acceptor.async_accept(service_, endpoint_,
                           [&](const boost::system::error_code &error,
                               boost::asio::ip::tcp::socket peer) {
                             // TODO: add fiber here
+
                             io_service current_service;
+
                             std::string buffer(1024, ' ');
                             Accept(peer, acceptor, current_service, buffer);
-                            current_service.run();
+                            std::cout << "Handled\n";
                           });
-    service_.run();
-    std::cout << "end of waiting";
+
+    std::cout << "End of waiting\n";
   }
 
   void Accept(ip::tcp::socket &peer, ip::tcp::acceptor &acceptor,
@@ -74,6 +77,8 @@ void TCPServer::StartServer() {
   std::cout << "Starting server\n";
   impl_->StartServer();
 }
+
+void TCPServer::Join() { impl_->Join(); }
 
 TCPServer::~TCPServer() {}
 

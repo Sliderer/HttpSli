@@ -4,6 +4,8 @@
 #include <built_servers/HttpServer.hpp>
 #include <helpers/http/AddressRouter.hpp>
 
+#include <thread>
+
 int main(){
     httpsli::helpers::http::HandlerPair handler("/local", [](httpsli::requests::http::HttpRequest& request){
         std::cout << "Answer is OK\n";
@@ -13,5 +15,9 @@ int main(){
     std::string address = "127.0.0.1";
     httpsli::http::HttpServer server(address, 8081, router);
     server.StartServer();
+    server.Join();
+
+
+
     return 0;
 }

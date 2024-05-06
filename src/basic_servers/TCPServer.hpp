@@ -21,6 +21,8 @@ namespace httpsli::tcp_server{
 
             void StartServer();
 
+            void Join();
+
             ~TCPServer();
         private:
         class Impl;
