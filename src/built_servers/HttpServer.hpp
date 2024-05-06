@@ -4,29 +4,38 @@
 
 #include <basic_servers/TCPServer.hpp>
 #include <boost/asio/ip/tcp.hpp>
+#include <helpers/http/AddressRouter.hpp>
 #include <models/requests/HttpRequest.hpp>
 #include <models/responses/HttpResponse.hpp>
-#include <helpers/http/AddressRouter.hpp>
 
 #include <functional>
+#include <sstream>
 
 namespace httpsli::http {
 
-    using Handler = std::function<httpsli::responses::http::HttpResponse(httpsli::requests::http::HttpRequest&)>;
-    using ClientSession = std::function<responses::http::HttpResponse(requests::http::HttpRequest&)>;
+using Handler = std::function<httpsli::responses::http::HttpResponse(
+    httpsli::requests::http::HttpRequest &)>;
+using ClientSession =
+    std::function<responses::http::HttpResponse(requests::http::HttpRequest &)>;
 
-    class HttpServer : public httpsli::tcp_server::TCPServer {
-        public:
-            HttpServer(std::string& address, int port, httpsli::helpers::http::AddressRouter router);
+class HttpServer : public httpsli::tcp_server::TCPServer {
+public:
+  HttpServer(std::string &address, int port,
+             httpsli::helpers::http::AddressRouter router);
 
-        private:
-            void ClientSession(boost::asio::ip::tcp::socket& socket);
+private:
+  void ClientSession(boost::asio::ip::tcp::socket &socket);
 
-            requests::http::HttpRequest GetRequest(boost::asio::ip::tcp::socket& socket);
+  void ReadFromSocket(boost::asio::ip::tcp::socket &socket, int read_size,
+                      std::stringstream &data);
 
-            int SendResponse(responses::http::HttpResponse& response);
+  void WriteToScoket(boost::asio::ip::tcp::socket &socket, int write_size,
+                     httpsli::responses::http::HttpResponse &response);
 
-        private:
-            httpsli::helpers::http::AddressRouter router_;
-    };
-}
+  std::optional<Handler>
+  FindHandler(httpsli::requests::http::HttpRequest &request);
+
+private:
+  httpsli::helpers::http::AddressRouter router_;
+};
+} // namespace httpsli::http

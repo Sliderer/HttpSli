@@ -1,34 +1,41 @@
 #pragma once
 
-#include <vector>
 #include <functional>
-#include <regex>
 #include <optional>
+#include <regex>
+#include <vector>
 
 #include <models/requests/HttpRequest.hpp>
 #include <models/responses/HttpResponse.hpp>
 
 namespace httpsli::helpers::http {
 
-    using Handler = std::function<httpsli::responses::http::HttpResponse(httpsli::requests::http::HttpRequest&)>;
+using Handler = std::function<httpsli::responses::http::HttpResponse(
+    httpsli::requests::http::HttpRequest &)>;
 
-    class HandlerPair {
-        public: 
-        bool IsMatching(const std::string& address) const;
+class HandlerPair {
+public:
+  HandlerPair(const std::string &address, const Handler &handler);
 
-        Handler GetHandler() const;
+  bool IsMatching(const std::string &address) const;
 
-        private:
-            std::regex address_;
-            Handler handler_; 
-    };
+  Handler GetHandler() const;
 
-    class AddressRouter{
-        public:
-        
-        std::optional<Handler> FindHandler(httpsli::requests::http::HttpRequest& request) const;
+private:
+  std::regex address_;
+  Handler handler_;
+};
 
-        private:
-            std::vector<HandlerPair> handlers_;
-    };
-}
+class AddressRouter {
+public:
+  AddressRouter(const std::vector<HandlerPair> &handlers);
+
+  std::optional<Handler>
+  FindHandler(httpsli::requests::http::HttpRequest &request) const;
+
+  void AddHandler(const HandlerPair &handler);
+
+private:
+  std::vector<HandlerPair> handlers_;
+};
+} // namespace httpsli::helpers::http
