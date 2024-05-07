@@ -31,7 +31,7 @@ private:
   void ReadFromSocket(boost::asio::ip::tcp::socket &socket,
                       boost::asio::io_service &service, std::string buffer);
 
-  void WriteToSocket(boost::asio::ip::tcp::socket &socket,
+  void WriteToSocket(boost::asio::ip::tcp::socket* socket,
                      httpsli::responses::http::HttpResponse* response);
 
   std::optional<Handler>
