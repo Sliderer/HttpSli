@@ -7,4 +7,4 @@ OUTPUT_FOLDER = ./bin
 .PHONY: all
 all:
 	$(COMPILER) $(OPTIONS) $(SOURCE_FILES)
-	valgrind ./$(BIN_NAME)
+	valgrind --log-file="file" --leak-check=full ./$(BIN_NAME)

@@ -21,11 +21,13 @@ void HttpServer::ClientSession(boost::asio::ip::tcp::socket &socket,
 }
 
 void HttpServer::ReadFromSocket(boost::asio::ip::tcp::socket &socket,
-                                boost::asio::io_service &service, std::string& buffer) {
-
-  std::function<void(const boost::system::error_code &, std::size_t)>
-      reading_handler = [&](const boost::system::error_code &error,
+                                boost::asio::io_service &service, std::string) {
+  char * buffer = new char[1024];
+   
+  
+  auto reading_handler = [&, buffer](const boost::system::error_code &error,
                             std::size_t bytes_transferred) {
+
         std::cout << error << '\n';
         std::cout << "Readed " << bytes_transferred << '\n';
         std::cout << "Request " << buffer << '\n';
@@ -36,27 +38,33 @@ void HttpServer::ReadFromSocket(boost::asio::ip::tcp::socket &socket,
           return;
         }
 
-        httpsli::responses::http::HttpResponse response = (*handler)(request);
+        httpsli::responses::http::HttpResponse* response = new httpsli::responses::http::HttpResponse((*handler)(request));
+        delete[] buffer;
 
-        WriteToScoket(socket, response);
+        WriteToSocket(socket, response);
       };
 
       
-  socket.async_read_some(boost::asio::buffer(buffer, buffer.size()), reading_handler);
+  socket.async_read_some(boost::asio::buffer(buffer, 1024), reading_handler);
 }
 
-void HttpServer::WriteToScoket(
+void HttpServer::WriteToSocket(
     boost::asio::ip::tcp::socket &socket,
-    httpsli::responses::http::HttpResponse &response) {
+    httpsli::responses::http::HttpResponse* response) {
+    
+  std::cout << "Answering\n";
 
-  std::string serialized_response = response.Serialize();
+  // char* serialized_response_cstr = new char[1024] {"dd"};
+  // //std::strcpy(serialized_response_cstr, serialized_response.c_str());
 
-  std::function<void(const boost::system::error_code &, std::size_t)>
-      write_handler = [&](const boost::system::error_code &error,
-                          std::size_t bytes_transferred) { socket.close(); };
+  // std::function<void(const boost::system::error_code &, std::size_t)>
+  //     write_handler = [](const boost::system::error_code &error,
+  //                         std::size_t bytes_transferred) {};
+  // std::cout << "Setting answer handler\n";
+  // socket.async_write_some(boost::asio::buffer(serialized_response_cstr, 1024),
+  //                         write_handler);
 
-  socket.async_write_some(boost::asio::buffer(serialized_response),
-                          write_handler);
+  socket.write_some(boost::asio::buffer("111", 3));
 }
 
 std::optional<Handler>

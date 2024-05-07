@@ -29,10 +29,10 @@ private:
                      std::string& buffer);
 
   void ReadFromSocket(boost::asio::ip::tcp::socket &socket,
-                      boost::asio::io_service &service, std::string& buffer);
+                      boost::asio::io_service &service, std::string buffer);
 
-  void WriteToScoket(boost::asio::ip::tcp::socket &socket,
-                     httpsli::responses::http::HttpResponse &response);
+  void WriteToSocket(boost::asio::ip::tcp::socket &socket,
+                     httpsli::responses::http::HttpResponse* response);
 
   std::optional<Handler>
   FindHandler(httpsli::requests::http::HttpRequest &request);
