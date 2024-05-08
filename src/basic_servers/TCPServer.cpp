@@ -55,7 +55,7 @@ private:
               io_service &service, std::string &buffer) {
     std::cout << "Connection accepted\n";
 
-    client_session_(peer, service, buffer);
+    client_session_(peer);
 
     StartWaitingForAccept(acceptor);
   }

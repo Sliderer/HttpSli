@@ -13,7 +13,7 @@ namespace httpsli::tcp_server{
     using namespace httpsli::responses;
     using namespace httpsli::requests;
 
-    using ClientSession = std::function<void (boost::asio::ip::tcp::socket&, boost::asio::io_service&, std::string&)>;
+    using ClientSession = std::function<void (boost::asio::ip::tcp::socket&)>;
 
     class TCPServer{
         public:

@@ -11,17 +11,13 @@ void HttpResponse::SetHeaders(Headers &headers) { headers_ = headers; }
 
 void HttpResponse::SetBody(std::string &body) { body_ = body; }
 
-void HttpResponse::SetRequestType(RequestType request_type) {
-  request_type_ = request_type;
-}
-
 void HttpResponse::SetStatusCode(int status_code) {
   status_code_ = status_code;
 }
 
 std::string HttpResponse::Serialize() {
-  std::stringstream response; // сюда будет записываться ответ клиенту
-  std::stringstream response_body; // тело ответа
+  std::stringstream response;
+  std::stringstream response_body; 
   response_body << "<title>Test C++ HTTP Server</title>\n"
                 << "<h1>Test page</h1>\n"
                 << "<p>This is body of the test page...</p>\n"
@@ -29,7 +25,6 @@ std::string HttpResponse::Serialize() {
                 << "<pre>" << "dd" << "</pre>\n"
                 << "<em><small>Test C++ Http Server</small></em>\n";
 
-  // Формируем весь ответ вместе с заголовками
   response << "HTTP/1.1 200 OK\r\n"
            << "Version: HTTP/1.1\r\n"
            << "Content-Type: text/plain; charset=utf-8\r\n"

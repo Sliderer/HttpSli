@@ -24,15 +24,12 @@ public:
              httpsli::helpers::http::AddressRouter router);
 
 private:
-  void ClientSession(boost::asio::ip::tcp::socket &socket,
-                     boost::asio::io_service &service, 
-                     std::string& buffer);
+  void ClientSession(boost::asio::ip::tcp::socket &socket);
 
-  void ReadFromSocket(boost::asio::ip::tcp::socket &socket,
-                      boost::asio::io_service &service, std::string buffer);
+  void ReadFromSocket(std::shared_ptr<boost::asio::ip::tcp::socket> socket);
 
-  void WriteToSocket(boost::asio::ip::tcp::socket* socket,
-                     httpsli::responses::http::HttpResponse* response);
+  void WriteToSocket(std::shared_ptr<boost::asio::ip::tcp::socket> socket,
+                     std::shared_ptr<httpsli::responses::http::HttpResponse> response);
 
   std::optional<Handler>
   FindHandler(httpsli::requests::http::HttpRequest &request);

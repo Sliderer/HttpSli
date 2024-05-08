@@ -15,9 +15,9 @@ class HttpResponse : public BasicResponse {
 public:
   HttpResponse(){}
 
-  HttpResponse(int status_code, RequestType request_type, Headers headers,
+  HttpResponse(int status_code, Headers headers,
               std::optional<std::string> body = std::nullopt)
-      : status_code_(status_code), request_type_(request_type), headers_(headers), body_(body) {}
+      : status_code_(status_code), headers_(headers), body_(body) {}
 
   void AddHeader(std::string& header_name, std::string& header_value);
 
@@ -25,15 +25,12 @@ public:
 
   void SetBody(std::string& body);
   
-  void SetRequestType(RequestType request_type);
-
   void SetStatusCode(int status_code);
 
   std::string Serialize() override;
 
 private:
   int status_code_;
-  RequestType request_type_;
   Headers headers_;
   std::optional<std::string> body_;
 };
