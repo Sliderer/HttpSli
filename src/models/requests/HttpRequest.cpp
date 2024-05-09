@@ -67,7 +67,7 @@ namespace httpsli::requests::http {
         for (; line_index < request_lines.size(); ++line_index){
             body += request_lines[line_index];
         }
-        
+
         return HttpRequest(request_type, headers, address, body);
     }
 }
