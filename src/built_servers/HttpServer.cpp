@@ -11,10 +11,11 @@
 namespace httpsli::http {
 HttpServer::HttpServer(std::string &address, int port,
                        httpsli::helpers::http::AddressRouter router)
-    : httpsli::tcp_server::TCPServer(address, port,
-                                     [this](boost::asio::ip::tcp::socket &socket) {
-                                       this->ClientSession(socket);
-                                     }),
+    : httpsli::tcp_server::TCPServer(
+          address, port,
+          [this](boost::asio::ip::tcp::socket &socket) {
+            this->ClientSession(socket);
+          }),
       router_(router) {}
 
 void HttpServer::ClientSession(boost::asio::ip::tcp::socket &socket) {
@@ -25,7 +26,7 @@ void HttpServer::ClientSession(boost::asio::ip::tcp::socket &socket) {
 }
 
 void HttpServer::ReadFromSocket(
-  std::shared_ptr<boost::asio::ip::tcp::socket> socket_ptr) {
+    std::shared_ptr<boost::asio::ip::tcp::socket> socket_ptr) {
 
   std::shared_ptr<char[]> buffer(new char[1024]);
 
@@ -33,16 +34,14 @@ void HttpServer::ReadFromSocket(
                           socket_ptr](const boost::system::error_code &error,
                                       std::size_t bytes_transferred) {
     if (error.failed()) {
-      std::cout << "Error: " << error.message() << '\n';
       return;
     }
 
-    std::cout << "Request " << buffer << '\n';
-
-    httpsli::requests::http::HttpRequest request = httpsli::requests::http::HttpRequestConstructor::Construct(buffer.get());
+    httpsli::requests::http::HttpRequest request =
+        httpsli::requests::http::HttpRequestConstructor::Construct(
+            buffer.get());
     std::optional<Handler> handler = FindHandler(request);
     if (!handler.has_value()) {
-      std::cout << "Can not find handler\n";
       return;
     }
 
@@ -70,16 +69,14 @@ void HttpServer::WriteToSocket(
       write_handler = [socket](const boost::system::error_code &error,
                                std::size_t bytes_transferred) {
         if (error.failed()) {
-          std::cout << "Failed to write in socket\n";
           return;
         }
         socket->close();
       };
 
-  std::cout << "Setting answer handler\n";
-  socket->async_write_some(boost::asio::buffer(serialized_response_cstr,
-                                               serialized_response.size()),
-                           write_handler);
+  socket->async_write_some(
+      boost::asio::buffer(serialized_response_cstr, serialized_response.size()),
+      write_handler);
 }
 
 std::optional<Handler>

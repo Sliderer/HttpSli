@@ -28,8 +28,9 @@ private:
 
   void ReadFromSocket(std::shared_ptr<boost::asio::ip::tcp::socket> socket);
 
-  void WriteToSocket(std::shared_ptr<boost::asio::ip::tcp::socket> socket,
-                     std::shared_ptr<httpsli::responses::http::HttpResponse> response);
+  void WriteToSocket(
+      std::shared_ptr<boost::asio::ip::tcp::socket> socket,
+      std::shared_ptr<httpsli::responses::http::HttpResponse> response);
 
   std::optional<Handler>
   FindHandler(httpsli::requests::http::HttpRequest &request);

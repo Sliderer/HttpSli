@@ -2,8 +2,8 @@
 
 #include <functional>
 #include <optional>
-#include <vector>
 #include <string>
+#include <vector>
 
 #include <models/requests/HttpRequest.hpp>
 #include <models/responses/HttpResponse.hpp>

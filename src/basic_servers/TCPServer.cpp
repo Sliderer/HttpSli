@@ -27,7 +27,6 @@ public:
 
 private:
   ip::tcp::acceptor InitializeServer() {
-    std::cout << "Initializing server\n";
     ip::tcp::resolver resolver(service_);
 
     endpoint_ = ip::tcp::endpoint(ip::tcp::v4(), port_);
@@ -35,21 +34,16 @@ private:
   }
 
   void StartWaitingForAccept(ip::tcp::acceptor &acceptor) {
-    std::cout << "Waiting for clients\n";
     acceptor.async_accept(service_, endpoint_,
                           [&](const boost::system::error_code &error,
                               boost::asio::ip::tcp::socket peer) {
                             // TODO: add fiber here
-                            
-                            Accept(peer, acceptor);
-                            std::cout << "Handled\n";
-                          });
 
-    std::cout << "End of waiting\n";
+                            Accept(peer, acceptor);
+                          });
   }
 
   void Accept(ip::tcp::socket &peer, ip::tcp::acceptor &acceptor) {
-    std::cout << "Connection accepted\n";
 
     client_session_(peer);
 
@@ -70,7 +64,6 @@ TCPServer::TCPServer(std::string &address, int port,
 }
 
 void TCPServer::StartServer() {
-  std::cout << "Starting server\n";
   impl_->StartServer();
 }
 

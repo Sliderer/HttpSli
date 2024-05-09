@@ -1,12 +1,10 @@
-#pragma once 
+#pragma once
 
 #include <string>
 
-namespace httpsli::requests{
-    class BasicRequest {
-        public:
-            BasicRequest() {}
-            
-            virtual std::string Serialize() = 0;
-    };
-}
+namespace httpsli::requests {
+class BasicRequest {
+public:
+  BasicRequest() {}
+};
+} // namespace httpsli::requests

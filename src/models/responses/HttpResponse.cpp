@@ -15,7 +15,7 @@ void HttpResponse::SetStatusCode(int status_code) {
   status_code_ = status_code;
 }
 
-void HttpResponse::SetResultMessage(const std::string& result_message){
+void HttpResponse::SetResultMessage(const std::string &result_message) {
   result_message_ = result_message;
 }
 
@@ -24,13 +24,19 @@ std::string HttpResponse::Serialize() {
 
   response << "HTTP/1.1 " << status_code_ << " " << result_message_ << "\r\n";
 
-  for (auto& [header, value] : headers_){
+  for (auto &[header, value] : headers_) {
     response << header << ": " << value << "\r\n";
+  }
+
+  if (body_.has_value()) {
+    response << "Content-Length: " << body_->size() << "\r\n";
   }
 
   response << "\r\n";
 
-  response  << body_.str();
+  if (body_.has_value()) {
+    response << body_.value();
+  }
   return response.str();
 }
 } // namespace httpsli::responses::http
