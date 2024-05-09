@@ -40,19 +40,15 @@ private:
                           [&](const boost::system::error_code &error,
                               boost::asio::ip::tcp::socket peer) {
                             // TODO: add fiber here
-
-                            io_service current_service;
-
-                            std::string buffer(1024, ' ');
-                            Accept(peer, acceptor, current_service, buffer);
+                            
+                            Accept(peer, acceptor);
                             std::cout << "Handled\n";
                           });
 
     std::cout << "End of waiting\n";
   }
 
-  void Accept(ip::tcp::socket &peer, ip::tcp::acceptor &acceptor,
-              io_service &service, std::string &buffer) {
+  void Accept(ip::tcp::socket &peer, ip::tcp::acceptor &acceptor) {
     std::cout << "Connection accepted\n";
 
     client_session_(peer);
