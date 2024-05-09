@@ -7,7 +7,7 @@
 #include <thread>
 
 int main(){
-    httpsli::helpers::http::HandlerPair handler("/local", [](httpsli::requests::http::HttpRequest& request){
+    httpsli::helpers::http::HandlerPair handler("/", [](httpsli::requests::http::HttpRequest& request){
         std::cout << "Answer is OK\n";
         return httpsli::responses::http::HttpResponse();
     });

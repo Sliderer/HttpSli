@@ -39,4 +39,12 @@ private:
   std::string address_;
   std::optional<std::string> body_;
 };
+
+
+class HttpRequestConstructor {
+  public:
+    static HttpRequest Construct(const std::string& request_string);
+};
+
+
 } // namespace httpsli::http

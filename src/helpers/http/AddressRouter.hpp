@@ -2,8 +2,8 @@
 
 #include <functional>
 #include <optional>
-#include <regex>
 #include <vector>
+#include <string>
 
 #include <models/requests/HttpRequest.hpp>
 #include <models/responses/HttpResponse.hpp>
@@ -22,7 +22,7 @@ public:
   Handler GetHandler() const;
 
 private:
-  std::regex address_;
+  std::string address_;
   Handler handler_;
 };
 

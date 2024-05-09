@@ -6,6 +6,8 @@
 #include <memory>
 #include <optional>
 
+#include <models/requests/HttpRequest.hpp>
+
 namespace httpsli::http {
 HttpServer::HttpServer(std::string &address, int port,
                        httpsli::helpers::http::AddressRouter router)
@@ -36,7 +38,8 @@ void HttpServer::ReadFromSocket(
     }
 
     std::cout << "Request " << buffer << '\n';
-    httpsli::requests::http::HttpRequest request;
+
+    httpsli::requests::http::HttpRequest request = httpsli::requests::http::HttpRequestConstructor::Construct(buffer.get());
     std::optional<Handler> handler = FindHandler(request);
     if (!handler.has_value()) {
       std::cout << "Can not find handler\n";

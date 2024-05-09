@@ -1,12 +1,16 @@
 #include "AddressRouter.hpp"
 #include <optional>
+#include <regex>
 
 namespace httpsli::helpers::http {
 
 HandlerPair::HandlerPair(const std::string &address, const Handler &handler)
     : address_(address), handler_(handler) {}
 
-bool HandlerPair::IsMatching(const std::string &address) const { return true; }
+bool HandlerPair::IsMatching(const std::string &address) const { 
+  std::regex regex_expression(address_);
+  return std::regex_match(address, regex_expression);
+}
 
 Handler HandlerPair::GetHandler() const { return handler_; }
 
