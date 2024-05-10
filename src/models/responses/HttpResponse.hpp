@@ -13,7 +13,7 @@ using Headers = std::unordered_map<std::string, std::string>;
 
 class HttpResponse : public BasicResponse {
 public:
-  HttpResponse() {}
+  HttpResponse() : status_code_(200), result_message_("OK") {}
 
   HttpResponse(int status_code, const std::string &result_message,
                Headers headers, std::optional<std::string> body = std::nullopt)

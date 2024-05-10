@@ -1,5 +1,5 @@
 COMPILER = g++
-BIN_NAME = httpcli
+BIN_NAME = httpsli
 OPTIONS = -I ./src -o $(BIN_NAME)
 SOURCE_FILES = $(shell find ./src -name '*.cpp')
 OUTPUT_FOLDER = ./bin

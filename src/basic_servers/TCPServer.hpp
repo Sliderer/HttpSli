@@ -27,6 +27,5 @@ public:
 private:
   class Impl;
   std::unique_ptr<Impl> impl_;
-  ClientSession client_session;
 };
 } // namespace httpsli::tcp_server

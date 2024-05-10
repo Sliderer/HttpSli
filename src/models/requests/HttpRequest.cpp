@@ -24,6 +24,7 @@ std::string HttpRequest::GetAddress() { return address_; }
 
 HttpRequest
 HttpRequestConstructor::Construct(const std::string &request_string) {
+
   std::vector<std::string> request_lines;
 
   boost::split(request_lines, request_string, boost::is_any_of("\n"));
@@ -42,20 +43,21 @@ HttpRequestConstructor::Construct(const std::string &request_string) {
 
   int line_index = 1;
   for (; line_index < request_lines.size(); ++line_index) {
-    if (request_lines[line_index].empty()) {
-      line_index++;
-      break;
-    }
     std::vector<std::string> header_parts;
 
     boost::split(header_parts, request_lines[line_index],
                  boost::is_any_of(": "));
+
+    if (header_parts.size() != 2){
+      line_index++;
+      break;
+    }
     std::string header = header_parts[0], value = header_parts[1];
 
     headers[header] = value;
   }
 
-  std::string body;
+   std::string body;
 
   for (; line_index < request_lines.size(); ++line_index) {
     body += request_lines[line_index];

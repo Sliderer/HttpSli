@@ -10,7 +10,10 @@ enum RequestType { GET, POST, DELETE, UPDATE, OPTIONS };
 class EnumGetter {
 public:
   static RequestType GetRequestType(const std::string &request_type_name) {
-    return getter_.at(request_type_name);
+    if (getter_.find(request_type_name) != getter_.end()){
+      return getter_.at(request_type_name);
+    }
+    return RequestType::GET;
   }
 
 private:

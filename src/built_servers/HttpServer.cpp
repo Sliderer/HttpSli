@@ -61,7 +61,7 @@ void HttpServer::WriteToSocket(
     std::shared_ptr<httpsli::responses::http::HttpResponse> response) {
 
   std::string serialized_response = response->Serialize();
-  char *serialized_response_cstr = new char[serialized_response.size()];
+  char *serialized_response_cstr = new char[serialized_response.size() + 1];
   std::strcpy(serialized_response_cstr, serialized_response.c_str());
 
   std::cout << "Answer: " << serialized_response_cstr << '\n';
