@@ -20,17 +20,17 @@ public:
       : status_code_(status_code), result_message_(result_message),
         headers_(headers), body_(body) {}
 
-  void AddHeader(std::string &header_name, std::string &header_value);
+  void AddHeader(const std::string &header_name, const std::string &header_value);
 
   void SetHeaders(Headers &headers);
 
-  void SetBody(std::string &body);
+  void SetBody(const std::string &body);
 
   void SetStatusCode(int status_code);
 
   void SetResultMessage(const std::string &result_message);
 
-  std::string Serialize() override;
+  std::string Serialize() const override;
 
 private:
   int status_code_;

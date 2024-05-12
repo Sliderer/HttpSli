@@ -9,8 +9,8 @@
 #include <models/requests/HttpRequest.hpp>
 
 namespace httpsli::http {
-HttpServer::HttpServer(std::string &address, int port,
-                       httpsli::helpers::http::AddressRouter router)
+HttpServer::HttpServer(const std::string &address, int port,
+                       const httpsli::helpers::http::AddressRouter &router)
     : httpsli::tcp_server::TCPServer(
           address, port,
           [this](boost::asio::ip::tcp::socket &socket) {
@@ -18,7 +18,7 @@ HttpServer::HttpServer(std::string &address, int port,
           }),
       router_(router) {}
 
-void HttpServer::ClientSession(boost::asio::ip::tcp::socket &socket) {
+void HttpServer::ClientSession(boost::asio::ip::tcp::socket &socket) const {
   std::shared_ptr<boost::asio::ip::tcp::socket> socket_ptr =
       std::make_shared<boost::asio::ip::tcp::socket>(std::move(socket));
 
@@ -26,11 +26,11 @@ void HttpServer::ClientSession(boost::asio::ip::tcp::socket &socket) {
 }
 
 void HttpServer::ReadFromSocket(
-    std::shared_ptr<boost::asio::ip::tcp::socket> socket_ptr) {
+    std::shared_ptr<boost::asio::ip::tcp::socket> socket_ptr) const {
 
   std::shared_ptr<char[]> buffer(new char[1024]);
 
-  auto reading_handler = [this, buffer,
+  auto recieve_handler = [this, buffer,
                           socket_ptr](const boost::system::error_code &error,
                                       std::size_t bytes_transferred) {
     if (error.failed()) {
@@ -52,35 +52,35 @@ void HttpServer::ReadFromSocket(
     WriteToSocket(socket_ptr, response);
   };
 
-  socket_ptr->async_read_some(boost::asio::buffer(buffer.get(), 1024),
-                              reading_handler);
+  socket_ptr->async_receive(boost::asio::buffer(buffer.get(), 1024),
+                            recieve_handler);
 }
 
 void HttpServer::WriteToSocket(
     std::shared_ptr<boost::asio::ip::tcp::socket> socket,
-    std::shared_ptr<httpsli::responses::http::HttpResponse> response) {
+    std::shared_ptr<httpsli::responses::http::HttpResponse> response) const {
 
   std::string serialized_response = response->Serialize();
-  char *serialized_response_cstr = new char[serialized_response.size() + 1];
-  std::strcpy(serialized_response_cstr, serialized_response.c_str());
+  std::shared_ptr<char[]> serialized_response_cstr(
+      new char[serialized_response.size() + 1]);
+  std::strcpy(serialized_response_cstr.get(), serialized_response.c_str());
 
-  std::cout << "Answer: " << serialized_response_cstr << '\n';
   std::function<void(const boost::system::error_code &, std::size_t)>
-      write_handler = [socket](const boost::system::error_code &error,
-                               std::size_t bytes_transferred) {
+      send_handler = [socket](const boost::system::error_code &error,
+                              std::size_t bytes_transferred) {
         if (error.failed()) {
           return;
         }
         socket->close();
       };
 
-  socket->async_write_some(
-      boost::asio::buffer(serialized_response_cstr, serialized_response.size()),
-      write_handler);
+  socket->async_send(boost::asio::buffer(serialized_response_cstr.get(),
+                                         serialized_response.size()),
+                     send_handler);
 }
 
 std::optional<Handler>
-HttpServer::FindHandler(httpsli::requests::http::HttpRequest &request) {
+HttpServer::FindHandler(httpsli::requests::http::HttpRequest &request) const {
   return router_.FindHandler(request);
 }
 

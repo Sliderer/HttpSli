@@ -3,7 +3,6 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
 
-#include <iostream>
 #include <vector>
 
 namespace httpsli::requests::http {
@@ -20,7 +19,11 @@ void HttpRequest::SetRequestType(RequestType request_type) {
   request_type_ = request_type;
 }
 
-std::string HttpRequest::GetAddress() { return address_; }
+std::string HttpRequest::GetAddress() const { return address_; }
+
+std::string HttpRequest::Serialize() const {
+  return "";
+}
 
 HttpRequest
 HttpRequestConstructor::Construct(const std::string &request_string) {

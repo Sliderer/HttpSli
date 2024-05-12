@@ -30,7 +30,9 @@ public:
 
   void SetRequestType(RequestType request_type);
 
-  std::string GetAddress();
+  std::string GetAddress() const;
+
+  std::string Serialize() const override;
 
 private:
   RequestType request_type_;

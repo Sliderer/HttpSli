@@ -3,13 +3,13 @@
 
 namespace httpsli::responses::http {
 
-void HttpResponse::AddHeader(std::string &header, std::string &header_value) {
+void HttpResponse::AddHeader(const std::string &header, const std::string &header_value) {
   headers_[header] = header_value;
 }
 
 void HttpResponse::SetHeaders(Headers &headers) { headers_ = headers; }
 
-void HttpResponse::SetBody(std::string &body) { body_ = body; }
+void HttpResponse::SetBody(const std::string &body) { body_ = body; }
 
 void HttpResponse::SetStatusCode(int status_code) {
   status_code_ = status_code;
@@ -19,7 +19,7 @@ void HttpResponse::SetResultMessage(const std::string &result_message) {
   result_message_ = result_message;
 }
 
-std::string HttpResponse::Serialize() {
+std::string HttpResponse::Serialize() const {
   std::stringstream response;
 
   response << "HTTP/1.1 " << status_code_ << " " << result_message_ << "\r\n";

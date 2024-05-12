@@ -10,7 +10,7 @@ using namespace boost::asio;
 
 class TCPServer::Impl {
 public:
-  Impl(std::string &address, int port, ClientSession client_session)
+  Impl(const std::string &address, int port, const ClientSession& client_session)
       : address_(address), port_(port), client_session_(client_session) {}
 
   Impl(Impl &impl) {}
@@ -58,16 +58,16 @@ private:
   ClientSession client_session_;
 };
 
-TCPServer::TCPServer(std::string &address, int port,
-                     ClientSession client_session) {
+TCPServer::TCPServer(const std::string &address, int port,
+                     const ClientSession& client_session) {
   impl_ = std::make_unique<Impl>(address, port, client_session);
 }
 
-void TCPServer::StartServer() {
+void TCPServer::StartServer() const {
   impl_->StartServer();
 }
 
-void TCPServer::Join() { impl_->Join(); }
+void TCPServer::Join() const { impl_->Join(); }
 
 TCPServer::~TCPServer() {}
 

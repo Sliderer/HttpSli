@@ -20,20 +20,20 @@ using ClientSession =
 
 class HttpServer : public httpsli::tcp_server::TCPServer {
 public:
-  HttpServer(std::string &address, int port,
-             httpsli::helpers::http::AddressRouter router);
+  HttpServer(const std::string &address, int port,
+             const httpsli::helpers::http::AddressRouter& router);
 
 private:
-  void ClientSession(boost::asio::ip::tcp::socket &socket);
+  void ClientSession(boost::asio::ip::tcp::socket &socket) const;
 
-  void ReadFromSocket(std::shared_ptr<boost::asio::ip::tcp::socket> socket);
+  void ReadFromSocket(std::shared_ptr<boost::asio::ip::tcp::socket> socket) const;
 
   void WriteToSocket(
       std::shared_ptr<boost::asio::ip::tcp::socket> socket,
-      std::shared_ptr<httpsli::responses::http::HttpResponse> response);
+      std::shared_ptr<httpsli::responses::http::HttpResponse> response) const;
 
   std::optional<Handler>
-  FindHandler(httpsli::requests::http::HttpRequest &request);
+  FindHandler(httpsli::requests::http::HttpRequest &request) const;
 
 private:
   httpsli::helpers::http::AddressRouter router_;
