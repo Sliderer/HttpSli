@@ -26,7 +26,7 @@ void HttpServer::ClientSession(boost::asio::ip::tcp::socket &socket) const {
 }
 
 void HttpServer::ReadFromSocket(
-    std::shared_ptr<boost::asio::ip::tcp::socket> socket_ptr) const {
+    const std::shared_ptr<boost::asio::ip::tcp::socket>& socket_ptr) const {
 
   std::shared_ptr<char[]> buffer(new char[1024]);
 
@@ -57,8 +57,8 @@ void HttpServer::ReadFromSocket(
 }
 
 void HttpServer::WriteToSocket(
-    std::shared_ptr<boost::asio::ip::tcp::socket> socket,
-    std::shared_ptr<httpsli::responses::http::HttpResponse> response) const {
+    const std::shared_ptr<boost::asio::ip::tcp::socket>& socket,
+    const std::shared_ptr<httpsli::responses::http::HttpResponse>& response) const {
 
   std::string serialized_response = response->Serialize();
   std::shared_ptr<char[]> serialized_response_cstr(
@@ -80,7 +80,7 @@ void HttpServer::WriteToSocket(
 }
 
 std::optional<Handler>
-HttpServer::FindHandler(httpsli::requests::http::HttpRequest &request) const {
+HttpServer::FindHandler(const httpsli::requests::http::HttpRequest &request) const {
   return router_.FindHandler(request);
 }
 

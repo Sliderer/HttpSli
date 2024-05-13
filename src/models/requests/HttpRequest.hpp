@@ -16,18 +16,20 @@ class HttpRequest : public requests::BasicRequest {
 public:
   HttpRequest() {}
 
-  HttpRequest(RequestType request_type, const std::string &address,
-              Headers headers, std::optional<std::string> body = std::nullopt)
+  HttpRequest(const RequestType &request_type, const std::string &address,
+              const Headers &headers,
+              const std::optional<std::string> &body = std::nullopt)
       : request_type_(request_type), address_(address), headers_(headers),
         body_(body) {}
 
-  void AddHeader(std::string &header_name, std::string &header_value);
+  void AddHeader(const std::string &header_name,
+                 const std::string &header_value);
 
-  void SetHeaders(Headers &headers);
+  void SetHeaders(const Headers &headers);
 
-  void SetBody(std::string &body);
+  void SetBody(const std::string &body);
 
-  void SetRequestType(RequestType request_type);
+  void SetRequestType(const RequestType &request_type);
 
   std::string GetAddress() const;
 

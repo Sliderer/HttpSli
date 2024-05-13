@@ -16,13 +16,13 @@ public:
   HttpResponse() : status_code_(200), result_message_("OK") {}
 
   HttpResponse(int status_code, const std::string &result_message,
-               Headers headers, std::optional<std::string> body = std::nullopt)
+               const Headers& headers, const std::optional<std::string>& body = std::nullopt)
       : status_code_(status_code), result_message_(result_message),
         headers_(headers), body_(body) {}
 
   void AddHeader(const std::string &header_name, const std::string &header_value);
 
-  void SetHeaders(Headers &headers);
+  void SetHeaders(const Headers &headers);
 
   void SetBody(const std::string &body);
 

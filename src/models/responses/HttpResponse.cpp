@@ -14,7 +14,7 @@ void HttpResponse::AddHeader(const std::string &header,
   headers_[header] = header_value;
 }
 
-void HttpResponse::SetHeaders(Headers &headers) { headers_ = headers; }
+void HttpResponse::SetHeaders(const Headers &headers) { headers_ = headers; }
 
 void HttpResponse::SetBody(const std::string &body) { body_ = body; }
 

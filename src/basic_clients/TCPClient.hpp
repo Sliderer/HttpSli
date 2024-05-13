@@ -16,6 +16,9 @@ using RecievingHandler = std::optional<
     std::function<void(const boost::system::error_code &, std::size_t,
                        const std::shared_ptr<char[]> &)>>;
 
+using SendingHandler = std::optional<
+    std::function<void(const boost::system::error_code &, std::size_t)>>;
+
 using namespace boost::asio;
 
 class TCPClient {
@@ -29,7 +32,8 @@ public:
 
 protected:
   void SendRequest(const requests::BasicRequest &request,
-                   const RecievingHandler &recieving_handler = std::nullopt);
+                   const RecievingHandler &recieving_handler = std::nullopt,
+                   const SendingHandler &sending_handler = std::nullopt);
 
   void Disconnect();
 

@@ -22,7 +22,7 @@ void AddressRouter::AddHandler(const HandlerPair &handler) {
 }
 
 std::optional<Handler> AddressRouter::FindHandler(
-    httpsli::requests::http::HttpRequest &request) const {
+    const httpsli::requests::http::HttpRequest &request) const {
   for (const HandlerPair &pair : handlers_) {
     if (pair.IsMatching(request.GetAddress())) {
       return pair.GetHandler();

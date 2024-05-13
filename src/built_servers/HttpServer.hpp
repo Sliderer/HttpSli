@@ -24,14 +24,14 @@ public:
 private:
   void ClientSession(boost::asio::ip::tcp::socket &socket) const;
 
-  void ReadFromSocket(std::shared_ptr<boost::asio::ip::tcp::socket> socket) const;
+  void ReadFromSocket(const std::shared_ptr<boost::asio::ip::tcp::socket>& socket) const;
 
   void WriteToSocket(
-      std::shared_ptr<boost::asio::ip::tcp::socket> socket,
-      std::shared_ptr<httpsli::responses::http::HttpResponse> response) const;
+      const std::shared_ptr<boost::asio::ip::tcp::socket>& socket,
+      const std::shared_ptr<httpsli::responses::http::HttpResponse>& response) const;
 
   std::optional<Handler>
-  FindHandler(httpsli::requests::http::HttpRequest &request) const;
+  FindHandler(const httpsli::requests::http::HttpRequest &request) const;
 
 private:
   httpsli::helpers::http::AddressRouter router_;

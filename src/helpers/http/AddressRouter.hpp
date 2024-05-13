@@ -31,7 +31,7 @@ public:
   AddressRouter(const std::vector<HandlerPair> &handlers);
 
   std::optional<Handler>
-  FindHandler(httpsli::requests::http::HttpRequest &request) const;
+  FindHandler(const httpsli::requests::http::HttpRequest &request) const;
 
   void AddHandler(const HandlerPair &handler);
 
