@@ -38,4 +38,9 @@ private:
   Headers headers_;
   std::optional<std::string> body_;
 };
+
+class HttpResponseConstructor {
+  public:
+    static HttpResponse Construct(const std::string& response_string);
+}
 } // namespace httpsli::responses::http
