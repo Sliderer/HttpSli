@@ -1,8 +1,10 @@
 #include "HttpRequest.hpp"
+#include <enums/RequestType.hpp>
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
 
+#include <sstream>
 #include <vector>
 
 namespace httpsli::requests::http {
@@ -22,7 +24,27 @@ void HttpRequest::SetRequestType(RequestType request_type) {
 std::string HttpRequest::GetAddress() const { return address_; }
 
 std::string HttpRequest::Serialize() const {
-  return "";
+  std::stringstream request;
+
+  std::string request_type_string = EnumToString::Get(request_type_);
+
+  request << request_type_string << " " << address_ << " HTTP/1.1\r\n";
+
+  for (auto& [header, value] : headers_){
+    request << header << ": " << value << "\r\n";
+  }
+
+  if (body_.has_value()){
+    request << "Content-Length: " << body_.value().size() << "\r\n";
+  }
+
+  request << "\r\n";
+
+  if (body_.has_value()){
+    request << body_.value();
+  }
+
+  return request.str();
 }
 
 HttpRequest
@@ -38,7 +60,7 @@ HttpRequestConstructor::Construct(const std::string &request_string) {
 
   std::string request_type_string = first_string_parts[0];
   httpsli::http::RequestType request_type =
-      httpsli::http::EnumGetter::GetRequestType(request_type_string);
+      httpsli::http::StringToEnum::Get(request_type_string);
   std::string address = first_string_parts[1];
   std::string http_version = first_string_parts[2];
 
@@ -51,7 +73,7 @@ HttpRequestConstructor::Construct(const std::string &request_string) {
     boost::split(header_parts, request_lines[line_index],
                  boost::is_any_of(": "));
 
-    if (header_parts.size() != 2){
+    if (header_parts.size() != 2) {
       line_index++;
       break;
     }
@@ -60,12 +82,12 @@ HttpRequestConstructor::Construct(const std::string &request_string) {
     headers[header] = value;
   }
 
-   std::string body;
+  std::string body;
 
   for (; line_index < request_lines.size(); ++line_index) {
     body += request_lines[line_index];
   }
 
-  return HttpRequest(request_type, headers, address, body);
+  return HttpRequest(request_type, address, headers, body);
 }
 } // namespace httpsli::requests::http

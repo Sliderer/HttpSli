@@ -1,4 +1,5 @@
 #include "TCPClient.hpp"
+#include "models/requests/BasicRequest.hpp"
 #include <boost/asio/buffer.hpp>
 #include <boost/asio/connect.hpp>
 #include <boost/asio/io_service.hpp>
@@ -12,11 +13,17 @@
 namespace httpsli::tcp_client {
 class TCPClient::Impl {
 public:
-  template <
-      typename Response, typename Request,
-      std::enable_if_t<std::is_base_of_v<requests::BasicRequest, Request>>,
-      std::enable_if_t<std::is_base_of_v<responses::BasicResponse, Response>>>
-  Response SendRequest(const Request &request) {
+  Impl(const std::string& address, int port){
+    ip::tcp::endpoint endpoint(ip::address::from_string(address), port);
+
+    socket_prt_.reset(new ip::tcp::socket(service_));
+    socket_prt_->async_connect(endpoint, [this](const boost::system::error_code &error){
+        this->ConnectionHandler();
+    });
+  }
+
+  void SendRequest(const requests::BasicRequest &request) {
+    std::cout << "Sending reqeust\n";
 
     std::shared_ptr<char[]> reading_buffer(new char[1024]);
 
@@ -25,67 +32,51 @@ public:
         new char[serialized_request.size() + 1]);
     std::strcpy(serialized_request_cstr.get(), serialized_request.c_str());
 
+    std::cout << serialized_request << '\n';
+
     auto sending_handler =
         [this, reading_buffer](const boost::system::error_code &error,
                                std::size_t bytes_transferred) {
-          auto recieving_handler = [reading_buffer](const boost::system::error_code &error,
-                                      std::size_t bytes_transferred) {
-            std::cout << "Got " << reading_buffer << '\n';
-          };
-
-          socket_.async_receive(buffer(reading_buffer.get(), 1024),
+          auto recieving_handler =
+              [reading_buffer](const boost::system::error_code &error,
+                               std::size_t bytes_transferred) {
+                std::cout << "Readed " << bytes_transferred << '\n';
+                std::cout << "Got " << reading_buffer << '\n';
+              };
+          std::cout << "Recieving data\n";
+          socket_prt_->async_receive(buffer(reading_buffer.get(), 1024),
                                 recieving_handler);
         };
 
-    socket_.async_send(
+    socket_prt_->async_send(
         buffer(serialized_request_cstr.get(), serialized_request.size()),
         sending_handler);
   }
 
-  void Connect(const std::string &address, int port) {
-    ip::tcp::endpoint endpoint(ip::address::from_string(address), port);
-
-    socket_ = ip::tcp::socket(service_);
-    socket_.async_connect(endpoint, &Impl::ConnectionHandler);
-  }
-
-  void Disconnect() { socket_.close(); }
+  void Disconnect() { socket_prt_->close(); }
 
   void Join() { service_.run(); }
 
 private:
-  void ConnectionHandler(const boost::system::error_code &error) {
-    if (error.failed()) {
-      std::cout << "Can not connect to server";
-    }
+  void ConnectionHandler() {
   }
 
 private:
   io_service service_;
-  ip::tcp::socket socket_;
+  std::shared_ptr<ip::tcp::socket> socket_prt_;
 };
 
-TCPClient::TCPClient() {}
-
-  template <
-      typename Response, typename Request,
-      std::enable_if_t<std::is_base_of_v<requests::BasicRequest, Request>>,
-      std::enable_if_t<std::is_base_of_v<responses::BasicResponse, Response>>>
-  Response TCPClient::SendRequest(const Request &request){
-    impl_->SendRequest<Response, Request>(request);
-  }
-
-void TCPClient::Connect(const std::string& address, int port){
-  impl_->Connect(address, port);
+TCPClient::TCPClient(const std::string& address, int port) {
+    impl_ = std::make_unique<Impl>(address, port);
 }
 
-void TCPClient::Disconnect(){
-  impl_->Disconnect();
+void TCPClient::SendRequest(const requests::BasicRequest &request) {
+  impl_->SendRequest(request);
 }
 
-void TCPClient::Join(){
-  impl_->Join();
-}
+void TCPClient::Disconnect() { impl_->Disconnect(); }
+
+void TCPClient::Join() { impl_->Join(); }
 
 TCPClient::~TCPClient() {}
 

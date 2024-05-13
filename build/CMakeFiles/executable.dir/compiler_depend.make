@@ -2854,7 +2854,7 @@ CMakeFiles/executable.dir/src/helpers/http/AddressRouter.cpp.o: /home/sliderer/p
 
 CMakeFiles/executable.dir/src/main.cpp.o: /home/sliderer/projects/HttpSli/src/main.cpp \
   /usr/include/stdc-predef.h \
-  /home/sliderer/projects/HttpSli/src/built_servers/HttpServer.hpp \
+  /home/sliderer/projects/HttpSli/src/basic_clients/TCPClient.hpp \
   /usr/include/boost/asio.hpp \
   /usr/include/boost/asio/associated_allocator.hpp \
   /usr/include/boost/asio/detail/config.hpp \
@@ -4071,9 +4071,10 @@ CMakeFiles/executable.dir/src/main.cpp.o: /home/sliderer/projects/HttpSli/src/ma
   /usr/include/boost/asio/windows/stream_handle.hpp \
   /usr/include/boost/asio/write_at.hpp \
   /usr/include/boost/asio/impl/write_at.hpp \
-  /home/sliderer/projects/HttpSli/src/basic_servers/TCPServer.hpp \
   /home/sliderer/projects/HttpSli/src/models/requests/BasicRequest.hpp \
   /home/sliderer/projects/HttpSli/src/models/responses/BasicResponse.hpp \
+  /home/sliderer/projects/HttpSli/src/built_servers/HttpServer.hpp \
+  /home/sliderer/projects/HttpSli/src/basic_servers/TCPServer.hpp \
   /home/sliderer/projects/HttpSli/src/helpers/http/AddressRouter.hpp \
   /usr/include/c++/12/optional \
   /home/sliderer/projects/HttpSli/src/models/requests/HttpRequest.hpp \
@@ -4720,7 +4721,11 @@ CMakeFiles/executable.dir/src/models/requests/HttpRequest.cpp.o: /home/sliderer/
   /usr/include/boost/algorithm/string/finder.hpp \
   /usr/include/boost/algorithm/string/constants.hpp \
   /usr/include/boost/algorithm/string/detail/finder.hpp \
-  /usr/include/boost/algorithm/string/compare.hpp
+  /usr/include/boost/algorithm/string/compare.hpp \
+  /usr/include/c++/12/sstream \
+  /usr/include/c++/12/istream \
+  /usr/include/c++/12/bits/istream.tcc \
+  /usr/include/c++/12/bits/sstream.tcc
 
 CMakeFiles/executable.dir/src/models/responses/HttpResponse.cpp.o: /home/sliderer/projects/HttpSli/src/models/responses/HttpResponse.cpp \
   /usr/include/stdc-predef.h \
@@ -5385,6 +5390,8 @@ CMakeFiles/executable.dir/src/models/responses/HttpResponse.cpp.o: /home/slidere
 /usr/include/boost/predef/os/beos.h:
 
 /usr/include/boost/predef/os/amigaos.h:
+
+/home/sliderer/projects/HttpSli/src/basic_clients/TCPClient.hpp:
 
 /usr/include/boost/predef/os/aix.h:
 

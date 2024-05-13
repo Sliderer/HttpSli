@@ -16,9 +16,8 @@ class HttpRequest : public requests::BasicRequest {
 public:
   HttpRequest() {}
 
-  HttpRequest(RequestType request_type, Headers headers,
-              const std::string &address,
-              std::optional<std::string> body = std::nullopt)
+  HttpRequest(RequestType request_type, const std::string &address,
+              Headers headers, std::optional<std::string> body = std::nullopt)
       : request_type_(request_type), address_(address), headers_(headers),
         body_(body) {}
 

@@ -1,10 +1,11 @@
+
+#include "basic_clients/TCPClient.hpp"
+#include "enums/RequestType.hpp"
 #include <built_servers/HttpServer.hpp>
 #include <helpers/http/AddressRouter.hpp>
 #include <iostream>
 #include <models/requests/HttpRequest.hpp>
 #include <models/responses/HttpResponse.hpp>
-#include <basic_clients/Htt
-
 #include <thread>
 
 int main() {
@@ -29,8 +30,11 @@ int main() {
   // httpsli::http::HttpServer server(address, 8081, router);
   // server.StartServer();
   // server.Join();
-
   
-
+  httpsli::tcp_client::TCPClient client("127.0.0.1", 80);
+  httpsli::requests::http::HttpRequest r(httpsli::http::RequestType::GET, "/", {{"Host", "reader.com"}});
+  client.SendRequest(r);
+  client.Join();
+  client.Disconnect();
   return 0;
 }

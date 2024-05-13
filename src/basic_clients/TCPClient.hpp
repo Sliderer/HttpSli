@@ -5,26 +5,19 @@
 #include <models/requests/BasicRequest.hpp>
 #include <memory>
 #include <models/responses/BasicResponse.hpp>
-#include <type_traits>
 
 namespace httpsli::tcp_client {
 using namespace boost::asio;
 
 class TCPClient {
 public:
-  TCPClient();
+  TCPClient(const std::string& address, int port);
 
   ~TCPClient();
 
   TCPClient(TCPClient& other) = delete;
 
-  template <
-      typename Response, typename Request,
-      std::enable_if_t<std::is_base_of_v<requests::BasicRequest, Request>>,
-      std::enable_if_t<std::is_base_of_v<responses::BasicResponse, Response>>>
-  Response SendRequest(const Request &request);
-
-  void Connect(const std::string& address, int port);
+  void SendRequest(const requests::BasicRequest &request);
 
   void Disconnect();
 

@@ -4,8 +4,6 @@ project(httpsli)
 
 set(CMAKE_C_CSTANDARD 17)
 
-# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I ./src")
-
 include_directories(src)
 
 file(GLOB_RECURSE FILES

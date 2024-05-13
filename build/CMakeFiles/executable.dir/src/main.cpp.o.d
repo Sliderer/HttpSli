@@ -1,6 +1,6 @@
 CMakeFiles/executable.dir/src/main.cpp.o: \
  /home/sliderer/projects/HttpSli/src/main.cpp /usr/include/stdc-predef.h \
- /home/sliderer/projects/HttpSli/src/built_servers/HttpServer.hpp \
+ /home/sliderer/projects/HttpSli/src/basic_clients/TCPClient.hpp \
  /usr/include/boost/asio.hpp \
  /usr/include/boost/asio/associated_allocator.hpp \
  /usr/include/boost/asio/detail/config.hpp /usr/include/boost/config.hpp \
@@ -1113,9 +1113,10 @@ CMakeFiles/executable.dir/src/main.cpp.o: \
  /usr/include/boost/asio/windows/stream_handle.hpp \
  /usr/include/boost/asio/write_at.hpp \
  /usr/include/boost/asio/impl/write_at.hpp \
- /home/sliderer/projects/HttpSli/src/basic_servers/TCPServer.hpp \
  /home/sliderer/projects/HttpSli/src/models/requests/BasicRequest.hpp \
  /home/sliderer/projects/HttpSli/src/models/responses/BasicResponse.hpp \
+ /home/sliderer/projects/HttpSli/src/built_servers/HttpServer.hpp \
+ /home/sliderer/projects/HttpSli/src/basic_servers/TCPServer.hpp \
  /home/sliderer/projects/HttpSli/src/helpers/http/AddressRouter.hpp \
  /usr/include/c++/12/optional \
  /home/sliderer/projects/HttpSli/src/models/requests/HttpRequest.hpp \
