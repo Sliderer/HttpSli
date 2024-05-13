@@ -1,5 +1,6 @@
 
 #include "basic_clients/TCPClient.hpp"
+#include "built_clients/HttpClient.hpp"
 #include "enums/RequestType.hpp"
 #include <built_servers/HttpServer.hpp>
 #include <helpers/http/AddressRouter.hpp>
@@ -30,10 +31,18 @@ int main() {
   // httpsli::http::HttpServer server(address, 8081, router);
   // server.StartServer();
   // server.Join();
-  
+
   // httpsli::tcp_client::TCPClient client("127.0.0.1", 80);
-  // httpsli::requests::http::HttpRequest r(httpsli::http::RequestType::GET, "/", {{"Host", "reader.com"}});
+  httpsli::requests::http::HttpRequest r(httpsli::http::RequestType::GET, "/", {{"Host", "reader.com"}});
   // client.SendRequest(r);
   // client.Join();
+
+  httpsli::http::HttpClient client("127.0.0.1", 80);
+  client.SendRequest(r, [](const boost::system::error_code &error, std::size_t bytes_transferred,
+    const std::shared_ptr<char[]> & buffer){
+      std::cout << buffer.get() << '\n';
+    });
+  client.Join();
+
   return 0;
 }

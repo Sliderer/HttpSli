@@ -9,22 +9,27 @@
 
 namespace httpsli::tcp_client {
 
-using ClientHandler =
+using ConnectionHandler =
     std::optional<std::function<void(const boost::system::error_code &error)>>;
+
+using RecievingHandler = std::optional<
+    std::function<void(const boost::system::error_code &, std::size_t,
+                       const std::shared_ptr<char[]> &)>>;
 
 using namespace boost::asio;
 
 class TCPClient {
 public:
   TCPClient(const std::string &address, int port,
-            ClientHandler connection_handler, ClientHandler sending_handler,
-            ClientHandler recieving_handler);
+            const ConnectionHandler &connection_handler = std::nullopt);
 
   ~TCPClient();
 
   TCPClient(TCPClient &other) = delete;
 
-  void SendRequest(const requests::BasicRequest &request);
+protected:
+  void SendRequest(const requests::BasicRequest &request,
+                   const RecievingHandler &recieving_handler = std::nullopt);
 
   void Disconnect();
 

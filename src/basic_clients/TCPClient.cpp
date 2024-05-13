@@ -17,12 +17,8 @@ namespace httpsli::tcp_client {
 class TCPClient::Impl {
 public:
   Impl(const std::string &address, int port,
-       ClientHandler connection_handler = std::nullopt,
-       ClientHandler sending_handler = std::nullopt,
-       ClientHandler recieving_handler = std::nullopt)
-      : connection_handler_(connection_handler),
-        sending_handler_(sending_handler),
-        recieving_handler_(recieving_handler) {
+       const ConnectionHandler &connection_handler)
+      : connection_handler_(connection_handler) {
     ip::tcp::endpoint endpoint(ip::address::from_string(address), port);
 
     socket_prt_.reset(new ip::tcp::socket(service_));
@@ -32,9 +28,9 @@ public:
                                });
   }
 
-  void SendRequest(const requests::BasicRequest &request) {
-
-    std::shared_ptr<char[]> reading_buffer(new char[1024]);
+  void SendRequest(const requests::BasicRequest &request, const RecievingHandler& recieving_handler = std::nullopt) {
+    recieving_handler_ = std::move(recieving_handler);
+    std::shared_ptr<char[]> recieving_buffer(new char[1024]);
 
     std::string serialized_request = request.Serialize();
     std::shared_ptr<char[]> serialized_request_cstr(
@@ -42,21 +38,21 @@ public:
     std::strcpy(serialized_request_cstr.get(), serialized_request.c_str());
 
     auto sending_handler =
-        [this, reading_buffer](const boost::system::error_code &error,
+        [this, recieving_buffer](const boost::system::error_code &error,
                                std::size_t bytes_transferred) {
           auto recieving_handler =
-              [this, reading_buffer](const boost::system::error_code &error,
+              [this, recieving_buffer](const boost::system::error_code &error,
                                      std::size_t bytes_transferred) {
                 if (recieving_handler_.has_value()) {
-                  (*recieving_handler_)(error);
+                  (*recieving_handler_)(error, bytes_transferred, recieving_buffer);
                 }
               };
 
-          if (sending_handler_.has_value()) {
-            (*sending_handler_)(error);
-          }
+          // if (sending_handler_.has_value()) {
+          //   (*sending_handler_)(error);
+          // }
 
-          socket_prt_->async_receive(buffer(reading_buffer.get(), 1024),
+          socket_prt_->async_receive(buffer(recieving_buffer.get(), 1024),
                                      recieving_handler);
         };
 
@@ -79,20 +75,17 @@ private:
 private:
   io_service service_;
   std::shared_ptr<ip::tcp::socket> socket_prt_;
-  ClientHandler connection_handler_;
-  ClientHandler sending_handler_;
-  ClientHandler recieving_handler_;
+  ::httpsli::tcp_client::ConnectionHandler connection_handler_;
+  RecievingHandler recieving_handler_;
 };
 
 TCPClient::TCPClient(const std::string &address, int port,
-                     ClientHandler connection_handler = std::nullopt,
-                     ClientHandler sending_handler = std::nullopt,
-                     ClientHandler recieving_handler = std::nullopt) {
-  impl_ = std::make_unique<Impl>(address, port, connection_handler, sending_handler, recieving_handler);
+                     const ConnectionHandler& connection_handler) {
+  impl_ = std::make_unique<Impl>(address, port, connection_handler);
 }
 
-void TCPClient::SendRequest(const requests::BasicRequest &request) {
-  impl_->SendRequest(request);
+void TCPClient::SendRequest(const requests::BasicRequest &request, const RecievingHandler& recieving_handler) {
+  impl_->SendRequest(request, recieving_handler);
 }
 
 void TCPClient::Disconnect() { impl_->Disconnect(); }

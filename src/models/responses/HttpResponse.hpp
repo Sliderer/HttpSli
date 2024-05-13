@@ -42,5 +42,5 @@ private:
 class HttpResponseConstructor {
   public:
     static HttpResponse Construct(const std::string& response_string);
-}
+};
 } // namespace httpsli::responses::http

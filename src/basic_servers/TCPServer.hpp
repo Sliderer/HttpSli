@@ -16,13 +16,15 @@ using ClientSession = std::function<void(boost::asio::ip::tcp::socket &)>;
 
 class TCPServer {
 public:
-  TCPServer(const std::string &address, int port, const ClientSession& client_session);
+  TCPServer(const std::string &address, int port,
+            const ClientSession &client_session);
 
+  ~TCPServer();
+
+protected:
   void StartServer() const;
 
   void Join() const;
-
-  ~TCPServer();
 
 private:
   class Impl;
