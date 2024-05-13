@@ -31,10 +31,9 @@ int main() {
   // server.StartServer();
   // server.Join();
   
-  httpsli::tcp_client::TCPClient client("127.0.0.1", 80);
-  httpsli::requests::http::HttpRequest r(httpsli::http::RequestType::GET, "/", {{"Host", "reader.com"}});
-  client.SendRequest(r);
-  client.Join();
-  client.Disconnect();
+  // httpsli::tcp_client::TCPClient client("127.0.0.1", 80);
+  // httpsli::requests::http::HttpRequest r(httpsli::http::RequestType::GET, "/", {{"Host", "reader.com"}});
+  // client.SendRequest(r);
+  // client.Join();
   return 0;
 }
