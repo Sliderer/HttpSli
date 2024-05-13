@@ -15,8 +15,6 @@ namespace httpsli::http {
 
 using Handler = std::function<httpsli::responses::http::HttpResponse(
     httpsli::requests::http::HttpRequest &)>;
-using ClientSession =
-    std::function<responses::http::HttpResponse(requests::http::HttpRequest &)>;
 
 class HttpServer : public httpsli::tcp_server::TCPServer {
 public:
