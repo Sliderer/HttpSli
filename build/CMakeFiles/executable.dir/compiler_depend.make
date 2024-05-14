@@ -2654,6 +2654,7 @@ CMakeFiles/executable.dir/src/built_clients/HttpClient.cpp.o: /home/sliderer/pro
   /home/sliderer/projects/HttpSli/src/models/requests/BasicRequest.hpp \
   /home/sliderer/projects/HttpSli/src/models/requests/HttpRequest.hpp \
   /home/sliderer/projects/HttpSli/src/models/responses/BasicResponse.hpp \
+  /home/sliderer/projects/HttpSli/src/models/responses/HttpResponse.hpp \
   /usr/include/alloca.h \
   /usr/include/arpa/inet.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -8754,13 +8755,13 @@ CMakeFiles/executable.dir/src/models/responses/HttpResponse.cpp.o: /home/slidere
 
 /home/sliderer/projects/HttpSli/src/enums/RequestType.cpp:
 
-/home/sliderer/projects/HttpSli/src/models/responses/HttpResponse.hpp:
-
 /home/sliderer/projects/HttpSli/src/helpers/http/AddressRouter.hpp:
 
 /home/sliderer/projects/HttpSli/src/built_servers/HttpServer.hpp:
 
 /home/sliderer/projects/HttpSli/src/built_servers/HttpServer.cpp:
+
+/home/sliderer/projects/HttpSli/src/models/responses/HttpResponse.hpp:
 
 /usr/include/boost/range/detail/sfinae.hpp:
 

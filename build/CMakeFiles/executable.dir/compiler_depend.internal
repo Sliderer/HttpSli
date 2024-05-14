@@ -2657,6 +2657,7 @@ CMakeFiles/executable.dir/src/built_clients/HttpClient.cpp.o
  /home/sliderer/projects/HttpSli/src/models/requests/BasicRequest.hpp
  /home/sliderer/projects/HttpSli/src/models/requests/HttpRequest.hpp
  /home/sliderer/projects/HttpSli/src/models/responses/BasicResponse.hpp
+ /home/sliderer/projects/HttpSli/src/models/responses/HttpResponse.hpp
  /usr/include/alloca.h
  /usr/include/arpa/inet.h
  /usr/include/asm-generic/bitsperlong.h
