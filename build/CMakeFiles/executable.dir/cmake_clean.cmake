@@ -1,6 +1,10 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/executable.dir/src/basic_clients/TCPClient.cpp.o"
+  "CMakeFiles/executable.dir/src/basic_clients/TCPClient.cpp.o.d"
   "CMakeFiles/executable.dir/src/basic_servers/TCPServer.cpp.o"
   "CMakeFiles/executable.dir/src/basic_servers/TCPServer.cpp.o.d"
+  "CMakeFiles/executable.dir/src/built_clients/HttpClient.cpp.o"
+  "CMakeFiles/executable.dir/src/built_clients/HttpClient.cpp.o.d"
   "CMakeFiles/executable.dir/src/built_servers/HttpServer.cpp.o"
   "CMakeFiles/executable.dir/src/built_servers/HttpServer.cpp.o.d"
   "CMakeFiles/executable.dir/src/enums/RequestType.cpp.o"

@@ -1,7 +1,7 @@
-CMakeFiles/executable.dir/src/built_servers/HttpServer.cpp.o: \
- /home/sliderer/projects/HttpSli/src/built_servers/HttpServer.cpp \
+CMakeFiles/executable.dir/src/basic_clients/TCPClient.cpp.o: \
+ /home/sliderer/projects/HttpSli/src/basic_clients/TCPClient.cpp \
  /usr/include/stdc-predef.h \
- /home/sliderer/projects/HttpSli/src/built_servers/HttpServer.hpp \
+ /home/sliderer/projects/HttpSli/src/basic_clients/TCPClient.hpp \
  /usr/include/boost/asio.hpp \
  /usr/include/boost/asio/any_completion_executor.hpp \
  /usr/include/boost/asio/detail/config.hpp /usr/include/boost/config.hpp \
@@ -1216,12 +1216,6 @@ CMakeFiles/executable.dir/src/built_servers/HttpServer.cpp.o: \
  /usr/include/boost/asio/writable_pipe.hpp \
  /usr/include/boost/asio/write_at.hpp \
  /usr/include/boost/asio/impl/write_at.hpp \
- /home/sliderer/projects/HttpSli/src/basic_servers/TCPServer.hpp \
  /home/sliderer/projects/HttpSli/src/models/requests/BasicRequest.hpp \
  /home/sliderer/projects/HttpSli/src/models/responses/BasicResponse.hpp \
- /home/sliderer/projects/HttpSli/src/helpers/http/AddressRouter.hpp \
- /usr/include/c++/13/optional \
- /home/sliderer/projects/HttpSli/src/models/requests/HttpRequest.hpp \
- /home/sliderer/projects/HttpSli/src/enums/RequestType.hpp \
- /home/sliderer/projects/HttpSli/src/models/responses/HttpResponse.hpp \
- /usr/include/c++/13/iostream
+ /usr/include/c++/13/optional
