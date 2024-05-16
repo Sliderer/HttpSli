@@ -14,7 +14,7 @@ using ConnectionHandler =
 
 using RecievingHandler = std::optional<
     std::function<void(const boost::system::error_code &, std::size_t,
-                       const std::shared_ptr<char[]> &)>>;
+                       char[] )>>;
 
 using SendingHandler = std::optional<
     std::function<void(const boost::system::error_code &, std::size_t)>>;

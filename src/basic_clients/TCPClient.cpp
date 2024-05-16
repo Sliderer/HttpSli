@@ -36,19 +36,23 @@ public:
     std::shared_ptr<char[]> recieving_buffer(new char[1024]);
 
     std::string serialized_request = request.Serialize();
-    std::shared_ptr<char[]> serialized_request_cstr(
-        new char[serialized_request.size() + 1]);
-    std::strcpy(serialized_request_cstr.get(), serialized_request.c_str());
+
+    char* serialized_request_cstr = new char[serialized_request.size() + 1]{' '};
+
+    std::strcpy(serialized_request_cstr, serialized_request.c_str());
 
     auto sending_handler =
-        [this, recieving_buffer](const boost::system::error_code &error,
+        [this, recieving_buffer, serialized_request_cstr](const boost::system::error_code &error,
                                  std::size_t bytes_transferred) {
+          
+          delete[] serialized_request_cstr;
+
           auto recieving_handler =
               [this, recieving_buffer](const boost::system::error_code &error,
                                        std::size_t bytes_transferred) {
                 if (recieving_client_handler_.has_value()) {
                   (*recieving_client_handler_)(error, bytes_transferred,
-                                               recieving_buffer);
+                                               recieving_buffer.get());
                 }
               };
 
@@ -61,7 +65,7 @@ public:
         };
 
     socket_prt_->async_send(
-        buffer(serialized_request_cstr.get(), serialized_request.size()),
+        buffer(serialized_request_cstr, serialized_request.size()),
         sending_handler);
   }
 

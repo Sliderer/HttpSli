@@ -37,13 +37,10 @@ int main() {
   // client.SendRequest(r);
   // client.Join();
 
-
-
   httpsli::http::HttpClient client("127.0.0.1", 80);
-  client.SendRequest(r, [](const boost::system::error_code &error, std::size_t bytes_transferred,
-    const std::shared_ptr<char[]> & buffer){
-      std::cout << buffer.get() << '\n';
-    });
+  client.SendRequest(r, [](const httpsli::responses::http::HttpResponse& response){
+    std::cout << response.Serialize();
+  });
   client.Join();
 
   return 0;

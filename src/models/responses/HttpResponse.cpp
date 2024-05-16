@@ -7,6 +7,8 @@
 #include <sstream>
 #include <vector>
 
+#include <iostream>
+
 namespace httpsli::responses::http {
 
 void HttpResponse::AddHeader(const std::string &header,
@@ -50,7 +52,7 @@ std::string HttpResponse::Serialize() const {
 HttpResponse
 HttpResponseConstructor::Construct(const std::string &response_string) {
   std::vector<std::string> response_lines;
-  boost::split(response_lines, response_string, boost::is_any_of("\r\n"));
+  boost::split(response_lines, response_string, boost::is_any_of("\n"));
   std::string first_line = response_lines[0];
 
   std::vector<std::string> first_line_parts;
@@ -60,13 +62,14 @@ HttpResponseConstructor::Construct(const std::string &response_string) {
   std::string response_message = first_line_parts[2];
   
   Headers headers;
-  std::optional<std::string> body = std::nullopt;
+  std::optional<std::string> body = "";
 
   int line_index = 1;
 
   for(;line_index < response_lines.size(); ++line_index){
     std::vector<std::string> parts;
     boost::split(parts, response_lines[line_index], boost::is_any_of(": "));
+    std::cout << "Size " << response_lines[line_index] << ' ' << parts.size() << '\n';
     if (parts.size() != 2){
       line_index++;
       break;
@@ -74,14 +77,14 @@ HttpResponseConstructor::Construct(const std::string &response_string) {
 
     std::string header = parts[0];
     std::string value = parts[1];
-
+    std::cout << header << ' ' << value << '\n';
     headers[header] = value;
   }
 
   for (; line_index < response_lines.size(); ++line_index){
     body->append(response_lines[line_index]);
   }
-
-  return HttpResponse(atoi(status_code_string.c_str()), response_message, headers);
+ 
+  return HttpResponse(atoi(status_code_string.c_str()), response_message, headers, body);
 }
 } // namespace httpsli::responses::http
