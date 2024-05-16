@@ -10,13 +10,14 @@
 
 namespace httpsli::http {
 HttpServer::HttpServer(const std::string &address, int port,
-                       const httpsli::helpers::http::AddressRouter &router)
+                       const httpsli::helpers::http::AddressRouter &router,
+                       size_t max_reading_buffer_size)
     : httpsli::tcp_server::TCPServer(
           address, port,
           [this](boost::asio::ip::tcp::socket &socket) {
             this->ClientSession(socket);
           }),
-      router_(router) {}
+      router_(router), max_reading_buffer_size_(max_reading_buffer_size) {}
 
 void HttpServer::ClientSession(boost::asio::ip::tcp::socket &socket) const {
   std::shared_ptr<boost::asio::ip::tcp::socket> socket_ptr =
@@ -28,7 +29,7 @@ void HttpServer::ClientSession(boost::asio::ip::tcp::socket &socket) const {
 void HttpServer::ReadFromSocket(
     const std::shared_ptr<boost::asio::ip::tcp::socket>& socket_ptr) const {
 
-  std::shared_ptr<char[]> buffer(new char[1024]);
+  std::shared_ptr<char[]> buffer(new char[max_reading_buffer_size_]);
 
   auto recieve_handler = [this, buffer,
                           socket_ptr](const boost::system::error_code &error,
@@ -52,7 +53,7 @@ void HttpServer::ReadFromSocket(
     WriteToSocket(socket_ptr, response);
   };
 
-  socket_ptr->async_receive(boost::asio::buffer(buffer.get(), 1024),
+  socket_ptr->async_receive(boost::asio::buffer(buffer.get(), max_reading_buffer_size_),
                             recieve_handler);
 }
 

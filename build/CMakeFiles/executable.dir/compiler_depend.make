@@ -1222,7 +1222,11 @@ CMakeFiles/executable.dir/src/basic_clients/TCPClient.cpp.o: /home/sliderer/proj
   /usr/include/boost/asio/impl/write_at.hpp \
   /home/sliderer/projects/HttpSli/src/models/requests/BasicRequest.hpp \
   /home/sliderer/projects/HttpSli/src/models/responses/BasicResponse.hpp \
-  /usr/include/c++/12/optional
+  /usr/include/c++/12/optional \
+  /usr/include/c++/12/cinttypes \
+  /usr/include/inttypes.h \
+  /usr/include/c++/12/thread \
+  /usr/include/c++/12/bits/this_thread_sleep.h
 
 CMakeFiles/executable.dir/src/basic_servers/TCPServer.cpp.o: /home/sliderer/projects/HttpSli/src/basic_servers/TCPServer.cpp \
   /usr/include/stdc-predef.h \
@@ -8159,8 +8163,6 @@ CMakeFiles/executable.dir/src/models/responses/HttpResponse.cpp.o: /home/slidere
 
 /home/sliderer/projects/HttpSli/src/models/requests/HttpRequest.cpp:
 
-/usr/include/c++/12/thread:
-
 /usr/include/c++/12/bits/regex_executor.h:
 
 /usr/include/c++/12/bits/regex.tcc:
@@ -8224,6 +8226,10 @@ CMakeFiles/executable.dir/src/models/responses/HttpResponse.cpp.o: /home/slidere
 /home/sliderer/projects/HttpSli/src/basic_servers/TCPServer.hpp:
 
 /home/sliderer/projects/HttpSli/src/basic_servers/TCPServer.cpp:
+
+/usr/include/c++/12/thread:
+
+/usr/include/inttypes.h:
 
 /usr/include/c++/12/optional:
 
@@ -10526,6 +10532,8 @@ CMakeFiles/executable.dir/src/models/responses/HttpResponse.cpp.o: /home/slidere
 /usr/include/boost/asio/detail/op_queue.hpp:
 
 /usr/include/boost/mpl/multiplies.hpp:
+
+/usr/include/c++/12/cinttypes:
 
 /usr/include/x86_64-linux-gnu/bits/types/sigevent_t.h:
 

@@ -19,7 +19,8 @@ using Handler = std::function<httpsli::responses::http::HttpResponse(
 class HttpServer : public httpsli::tcp_server::TCPServer {
 public:
   HttpServer(const std::string &address, int port,
-             const httpsli::helpers::http::AddressRouter& router);
+             const httpsli::helpers::http::AddressRouter& router, 
+             size_t max_reading_buffer_size = 16384);
 
 private:
   void ClientSession(boost::asio::ip::tcp::socket &socket) const;
@@ -35,5 +36,6 @@ private:
 
 private:
   httpsli::helpers::http::AddressRouter router_;
+  size_t max_reading_buffer_size_;
 };
 } // namespace httpsli::http

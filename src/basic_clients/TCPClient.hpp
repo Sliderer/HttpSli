@@ -12,9 +12,8 @@ namespace httpsli::tcp_client {
 using ConnectionHandler =
     std::optional<std::function<void(const boost::system::error_code &error)>>;
 
-using RecievingHandler = std::optional<
-    std::function<void(const boost::system::error_code &, std::size_t,
-                       char[] )>>;
+using RecievingHandler = std::optional<std::function<void(
+    const boost::system::error_code &, std::size_t, char[])>>;
 
 using SendingHandler = std::optional<
     std::function<void(const boost::system::error_code &, std::size_t)>>;
@@ -23,8 +22,10 @@ using namespace boost::asio;
 
 class TCPClient {
 public:
+
   TCPClient(const std::string &address, int port,
-            const ConnectionHandler &connection_handler = std::nullopt);
+            const ConnectionHandler &connection_handler = std::nullopt, 
+            size_t max_reading_buffer_size = 16384);
 
   ~TCPClient();
 

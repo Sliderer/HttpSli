@@ -68,7 +68,6 @@ HttpResponseConstructor::Construct(const std::string &response_string) {
   std::optional<std::string> body = "";
 
   int line_index = 1;
-  std::cout << '\n';
   for(;line_index < response_lines.size(); ++line_index){
     auto split_index = response_lines[line_index].find_first_of(':'); 
     if (split_index == std::string::npos){

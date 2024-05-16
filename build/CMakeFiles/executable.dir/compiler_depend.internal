@@ -1224,6 +1224,10 @@ CMakeFiles/executable.dir/src/basic_clients/TCPClient.cpp.o
  /home/sliderer/projects/HttpSli/src/models/requests/BasicRequest.hpp
  /home/sliderer/projects/HttpSli/src/models/responses/BasicResponse.hpp
  /usr/include/c++/12/optional
+ /usr/include/c++/12/cinttypes
+ /usr/include/inttypes.h
+ /usr/include/c++/12/thread
+ /usr/include/c++/12/bits/this_thread_sleep.h
 
 CMakeFiles/executable.dir/src/basic_servers/TCPServer.cpp.o
  /home/sliderer/projects/HttpSli/src/basic_servers/TCPServer.cpp

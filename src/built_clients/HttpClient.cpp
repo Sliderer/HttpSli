@@ -33,11 +33,8 @@ void HttpClient::RecievingHandler(const boost::system::error_code &error_code,
                                   ClientRecievingHandler handler) {
   if (handler.has_value()) {
     std::string response_string(buffer, bytes_transferred);
-    
-    // for (int i = 0; i < bytes_transferred; ++i){
-    //   std::cout << buffer[i];
-    // }
-    // std::cout << "\n\n";
+
+    std::cout << "Bytes " << bytes_transferred << '\n';
 
     std::cout << response_string << '\n';
 
