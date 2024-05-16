@@ -22,23 +22,21 @@ using namespace boost::asio;
 
 class TCPClient {
 public:
-
   TCPClient(const std::string &address, int port,
-            const ConnectionHandler &connection_handler = std::nullopt, 
+            const ConnectionHandler &connection_handler = std::nullopt,
             size_t max_reading_buffer_size = 16384);
 
   ~TCPClient();
 
-  TCPClient(TCPClient &other) = delete;
-
-protected:
+  TCPClient(TCPClient &) = delete;
+  
   void SendRequest(const requests::BasicRequest &request,
                    const RecievingHandler &recieving_handler = std::nullopt,
                    const SendingHandler &sending_handler = std::nullopt);
 
   void Disconnect();
 
-  void Join();
+  void Join() const;
 
 private:
   class Impl;

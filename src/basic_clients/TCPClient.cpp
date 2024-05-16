@@ -114,7 +114,7 @@ void TCPClient::SendRequest(const requests::BasicRequest &request,
 
 void TCPClient::Disconnect() { impl_->Disconnect(); }
 
-void TCPClient::Join() { impl_->Join(); }
+void TCPClient::Join() const { impl_->Join(); }
 
 TCPClient::~TCPClient() {}
 
