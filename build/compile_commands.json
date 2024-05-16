@@ -2,55 +2,46 @@
 {
   "directory": "/home/sliderer/projects/HttpSli/build",
   "command": "/usr/bin/clang++-14 -I/home/sliderer/projects/HttpSli/src -g -o CMakeFiles/executable.dir/src/basic_clients/TCPClient.cpp.o -c /home/sliderer/projects/HttpSli/src/basic_clients/TCPClient.cpp",
-  "file": "/home/sliderer/projects/HttpSli/src/basic_clients/TCPClient.cpp",
-  "output": "CMakeFiles/executable.dir/src/basic_clients/TCPClient.cpp.o"
+  "file": "/home/sliderer/projects/HttpSli/src/basic_clients/TCPClient.cpp"
 },
 {
   "directory": "/home/sliderer/projects/HttpSli/build",
   "command": "/usr/bin/clang++-14 -I/home/sliderer/projects/HttpSli/src -g -o CMakeFiles/executable.dir/src/basic_servers/TCPServer.cpp.o -c /home/sliderer/projects/HttpSli/src/basic_servers/TCPServer.cpp",
-  "file": "/home/sliderer/projects/HttpSli/src/basic_servers/TCPServer.cpp",
-  "output": "CMakeFiles/executable.dir/src/basic_servers/TCPServer.cpp.o"
+  "file": "/home/sliderer/projects/HttpSli/src/basic_servers/TCPServer.cpp"
 },
 {
   "directory": "/home/sliderer/projects/HttpSli/build",
   "command": "/usr/bin/clang++-14 -I/home/sliderer/projects/HttpSli/src -g -o CMakeFiles/executable.dir/src/built_clients/HttpClient.cpp.o -c /home/sliderer/projects/HttpSli/src/built_clients/HttpClient.cpp",
-  "file": "/home/sliderer/projects/HttpSli/src/built_clients/HttpClient.cpp",
-  "output": "CMakeFiles/executable.dir/src/built_clients/HttpClient.cpp.o"
+  "file": "/home/sliderer/projects/HttpSli/src/built_clients/HttpClient.cpp"
 },
 {
   "directory": "/home/sliderer/projects/HttpSli/build",
   "command": "/usr/bin/clang++-14 -I/home/sliderer/projects/HttpSli/src -g -o CMakeFiles/executable.dir/src/built_servers/HttpServer.cpp.o -c /home/sliderer/projects/HttpSli/src/built_servers/HttpServer.cpp",
-  "file": "/home/sliderer/projects/HttpSli/src/built_servers/HttpServer.cpp",
-  "output": "CMakeFiles/executable.dir/src/built_servers/HttpServer.cpp.o"
+  "file": "/home/sliderer/projects/HttpSli/src/built_servers/HttpServer.cpp"
 },
 {
   "directory": "/home/sliderer/projects/HttpSli/build",
   "command": "/usr/bin/clang++-14 -I/home/sliderer/projects/HttpSli/src -g -o CMakeFiles/executable.dir/src/enums/RequestType.cpp.o -c /home/sliderer/projects/HttpSli/src/enums/RequestType.cpp",
-  "file": "/home/sliderer/projects/HttpSli/src/enums/RequestType.cpp",
-  "output": "CMakeFiles/executable.dir/src/enums/RequestType.cpp.o"
+  "file": "/home/sliderer/projects/HttpSli/src/enums/RequestType.cpp"
 },
 {
   "directory": "/home/sliderer/projects/HttpSli/build",
   "command": "/usr/bin/clang++-14 -I/home/sliderer/projects/HttpSli/src -g -o CMakeFiles/executable.dir/src/helpers/http/AddressRouter.cpp.o -c /home/sliderer/projects/HttpSli/src/helpers/http/AddressRouter.cpp",
-  "file": "/home/sliderer/projects/HttpSli/src/helpers/http/AddressRouter.cpp",
-  "output": "CMakeFiles/executable.dir/src/helpers/http/AddressRouter.cpp.o"
+  "file": "/home/sliderer/projects/HttpSli/src/helpers/http/AddressRouter.cpp"
 },
 {
   "directory": "/home/sliderer/projects/HttpSli/build",
   "command": "/usr/bin/clang++-14 -I/home/sliderer/projects/HttpSli/src -g -o CMakeFiles/executable.dir/src/main.cpp.o -c /home/sliderer/projects/HttpSli/src/main.cpp",
-  "file": "/home/sliderer/projects/HttpSli/src/main.cpp",
-  "output": "CMakeFiles/executable.dir/src/main.cpp.o"
+  "file": "/home/sliderer/projects/HttpSli/src/main.cpp"
 },
 {
   "directory": "/home/sliderer/projects/HttpSli/build",
   "command": "/usr/bin/clang++-14 -I/home/sliderer/projects/HttpSli/src -g -o CMakeFiles/executable.dir/src/models/requests/HttpRequest.cpp.o -c /home/sliderer/projects/HttpSli/src/models/requests/HttpRequest.cpp",
-  "file": "/home/sliderer/projects/HttpSli/src/models/requests/HttpRequest.cpp",
-  "output": "CMakeFiles/executable.dir/src/models/requests/HttpRequest.cpp.o"
+  "file": "/home/sliderer/projects/HttpSli/src/models/requests/HttpRequest.cpp"
 },
 {
   "directory": "/home/sliderer/projects/HttpSli/build",
   "command": "/usr/bin/clang++-14 -I/home/sliderer/projects/HttpSli/src -g -o CMakeFiles/executable.dir/src/models/responses/HttpResponse.cpp.o -c /home/sliderer/projects/HttpSli/src/models/responses/HttpResponse.cpp",
-  "file": "/home/sliderer/projects/HttpSli/src/models/responses/HttpResponse.cpp",
-  "output": "CMakeFiles/executable.dir/src/models/responses/HttpResponse.cpp.o"
+  "file": "/home/sliderer/projects/HttpSli/src/models/responses/HttpResponse.cpp"
 }
 ]
