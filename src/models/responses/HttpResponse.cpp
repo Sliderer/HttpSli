@@ -2,9 +2,12 @@
 
 #include "HttpResponse.hpp"
 #include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/constants.hpp>
+#include <boost/algorithm/string/predicate.hpp>
 #include <cstdlib>
 #include <optional>
 #include <sstream>
+#include <string>
 #include <vector>
 
 #include <iostream>
@@ -65,24 +68,21 @@ HttpResponseConstructor::Construct(const std::string &response_string) {
   std::optional<std::string> body = "";
 
   int line_index = 1;
-
+  std::cout << '\n';
   for(;line_index < response_lines.size(); ++line_index){
-    std::vector<std::string> parts;
-    boost::split(parts, response_lines[line_index], boost::is_any_of(": "));
-    std::cout << "Size " << response_lines[line_index] << ' ' << parts.size() << '\n';
-    if (parts.size() != 2){
+    auto split_index = response_lines[line_index].find_first_of(':'); 
+    if (split_index == std::string::npos){
       line_index++;
       break;
     }
 
-    std::string header = parts[0];
-    std::string value = parts[1];
-    std::cout << header << ' ' << value << '\n';
+    std::string header = response_lines[line_index].substr(0, split_index);
+    std::string value = response_lines[line_index].substr(split_index + 2);
     headers[header] = value;
   }
 
   for (; line_index < response_lines.size(); ++line_index){
-    body->append(response_lines[line_index]);
+    body->append(response_lines[line_index] + "\n");
   }
  
   return HttpResponse(atoi(status_code_string.c_str()), response_message, headers, body);

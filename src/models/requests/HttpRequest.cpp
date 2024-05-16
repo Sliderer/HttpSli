@@ -68,17 +68,14 @@ HttpRequestConstructor::Construct(const std::string &request_string) {
 
   int line_index = 1;
   for (; line_index < request_lines.size(); ++line_index) {
-    std::vector<std::string> header_parts;
-
-    boost::split(header_parts, request_lines[line_index],
-                 boost::is_any_of(": "));
-
-    if (header_parts.size() != 2) {
+    auto split_index = request_lines[line_index].find_first_of(':'); 
+    if (split_index == std::string::npos){
       line_index++;
       break;
     }
-    std::string header = header_parts[0], value = header_parts[1];
 
+    std::string header = request_lines[line_index].substr(0, split_index);
+    std::string value = request_lines[line_index].substr(split_index + 2);
     headers[header] = value;
   }
 
